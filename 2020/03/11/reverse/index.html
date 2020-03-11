@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"erenphy.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="what she says means everything">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LIXiaohui">
-<meta property="og:url" content="http://erenphy.github.io/tags/security/index.html">
+  <meta name="description" content="#逆向之旅 # 工具-IDA reverse sign in 逆向得到核心代码&#96;printf(“Please input your flag:”, a2, a3);isoc99_scanf((int64)”%32s”, (int64)&amp;s);if ( strlen(&amp;s) &#x3D;&#x3D; 32 ){  if ( (unsigned int)sub_400686((int64)&amp;s)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="reverse">
+<meta property="og:url" content="http://erenphy.github.io/2020/03/11/reverse/index.html">
 <meta property="og:site_name" content="LIXiaohui">
-<meta property="og:description" content="what she says means everything">
+<meta property="og:description" content="#逆向之旅 # 工具-IDA reverse sign in 逆向得到核心代码&#96;printf(“Please input your flag:”, a2, a3);isoc99_scanf((int64)”%32s”, (int64)&amp;s);if ( strlen(&amp;s) &#x3D;&#x3D; 32 ){  if ( (unsigned int)sub_400686((int64)&amp;s)">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/11/reverse/reverse1.jpg">
+<meta property="article:published_time" content="2020-03-11T10:00:36.259Z">
+<meta property="article:modified_time" content="2020-03-11T12:20:34.484Z">
 <meta property="article:author" content="lixiaohui">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://erenphy.github.io/2020/03/11/reverse/reverse1.jpg">
 
-<link rel="canonical" href="http://erenphy.github.io/tags/security/">
+<link rel="canonical" href="http://erenphy.github.io/2020/03/11/reverse/">
 
 
 <script id="page-configurations">
@@ -38,11 +42,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false
+    isPost : true
   };
 </script>
 
-  <title>标签: security | LIXiaohui</title>
+  <title>reverse | LIXiaohui</title>
   
 
 
@@ -143,50 +147,98 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">security
-          <small>标签</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/11/reverse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lixiaohui">
+      <meta itemprop="description" content="what she says means everything">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIXiaohui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          reverse
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-11 18:00:36 / 修改时间：20:20:34" itemprop="dateCreated datePublished" datetime="2020-03-11T18:00:36+08:00">2020-03-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <p>#<strong>逆向之旅</strong> #</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>-IDA</p>
+<h2 id="reverse-sign-in"><a href="#reverse-sign-in" class="headerlink" title="reverse sign in"></a>reverse sign in</h2><ul>
+<li><p>逆向得到核心代码<br>`printf(“Please input your flag:”, a2, a3);<br><strong>isoc99_scanf((</strong>int64)”%32s”, (<strong>int64)&amp;s);<br>if ( strlen(&amp;s) == 32 )<br>{<br>  if ( (unsigned int)sub_400686((</strong>int64)&amp;s) )</p>
+<pre><code>puts(&quot;Right!&quot;);</code></pre><p>  else</p>
+<pre><code>puts(&quot;Wrong!&quot;);</code></pre><p>  result = 0LL;<br>}<br>//调用的子函数<br>signed <strong>int64 __fastcall sub_400686(</strong>int64 a1)<br>{<br>signed int i;<br>for ( i = 0; i &lt;= 31; ++i )<br>{<br>  if ( (char)(*(_BYTE *)(i + a1) ^ byte_400818[i]) != i )</p>
+<pre><code>return 0LL;</code></pre><p>}<br>return 1LL;<br>}`</p>
+<ul>
+<li>其中<img src="reverse1.jpg" alt=""></li>
+<li>可知子函数定义一个循环，当循环的每次判断均为true时，才满足条件</li>
+</ul>
+</li>
+<li><p>逆向编程</p>
+</li>
+<li><p>`#include&lt;stdio.h&gt;<br>int array[]={102,109,99,100,127,60,54,114,87,66,100,59,123,82,124,60,102,84,96,96,39,74,73,127,113,88,82,114,125,117,42,98,0};<br>int main(){<br>  int i;<br>  for(i=0;i&lt;32;i++){</p>
+<pre><code>printf(&quot;%c&quot;,a[i]^i);</code></pre><p>  }<br>  printf(“\n”);<br>  return 0;}`<br>得到结果flag{90u_Kn0w_r3vErs3__hiAHiah4}</p>
+<h2 id="junior-math"><a href="#junior-math" class="headerlink" title="junior math"></a>junior math</h2></li>
+</ul>
+<h2 id="bytecode"><a href="#bytecode" class="headerlink" title="bytecode"></a>bytecode</h2><h2 id="angryHacking"><a href="#angryHacking" class="headerlink" title="angryHacking"></a>angryHacking</h2>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-11T15:12:22+08:00"
-              content="2020-03-11">
-          03-11
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/11/my-new-post/" itemprop="url">
-            <span itemprop="name">my first</span>
-          </a>
-      </h2>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/11/pwn/" rel="prev" title="pwn">
+      <i class="fa fa-chevron-left"></i> pwn
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/11/web/" rel="next" title="web">
+      web <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -237,6 +289,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reverse-sign-in"><span class="nav-number"></span> <span class="nav-text">reverse sign in</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#junior-math"><span class="nav-number"></span> <span class="nav-text">junior math</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bytecode"><span class="nav-number"></span> <span class="nav-text">bytecode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#angryHacking"><span class="nav-number"></span> <span class="nav-text">angryHacking</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -252,17 +305,9 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">分类</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>

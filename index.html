@@ -148,7 +148,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/11/my-new-post/">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/11/web/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -162,7 +162,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/11/my-new-post/" class="post-title-link" itemprop="url">my first</a>
+            <a href="/2020/03/11/web/" class="post-title-link" itemprop="url">web</a>
         </h1>
 
         <div class="post-meta">
@@ -173,16 +173,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-11 15:12:22 / 修改时间：15:37:46" itemprop="dateCreated datePublished" datetime="2020-03-11T15:12:22+08:00">2020-03-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Diary/" itemprop="url" rel="index"><span itemprop="name">Diary</span></a>
-                </span>
+              <time title="创建时间：2020-03-11 20:20:51 / 修改时间：21:36:39" itemprop="dateCreated datePublished" datetime="2020-03-11T20:20:51+08:00">2020-03-11</time>
             </span>
 
           
@@ -196,15 +187,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>ժҪ</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/11/my-new-post/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="calculator"><a href="#calculator" class="headerlink" title="calculator"></a>calculator</h2><h2 id="rapidtyping"><a href="#rapidtyping" class="headerlink" title="rapidtyping"></a>rapidtyping</h2><h2 id="basic-sql"><a href="#basic-sql" class="headerlink" title="basic sql"></a>basic sql</h2>
       
     </div>
 
@@ -223,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/11/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/11/reverse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -237,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/11/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2020/03/11/reverse/" class="post-title-link" itemprop="url">reverse</a>
         </h1>
 
         <div class="post-meta">
@@ -246,8 +229,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-03-11 14:51:29" itemprop="dateCreated datePublished" datetime="2020-03-11T14:51:29+08:00">2020-03-11</time>
+              <time title="创建时间：2020-03-11 18:00:36 / 修改时间：20:20:34" itemprop="dateCreated datePublished" datetime="2020-03-11T18:00:36+08:00">2020-03-11</time>
             </span>
 
           
@@ -261,20 +245,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+          <p>#<strong>逆向之旅</strong> #</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>-IDA</p>
+<h2 id="reverse-sign-in"><a href="#reverse-sign-in" class="headerlink" title="reverse sign in"></a>reverse sign in</h2><ul>
+<li><p>逆向得到核心代码<br>`printf(“Please input your flag:”, a2, a3);<br><strong>isoc99_scanf((</strong>int64)”%32s”, (<strong>int64)&amp;s);<br>if ( strlen(&amp;s) == 32 )<br>{<br>  if ( (unsigned int)sub_400686((</strong>int64)&amp;s) )</p>
+<pre><code>puts(&quot;Right!&quot;);</code></pre><p>  else</p>
+<pre><code>puts(&quot;Wrong!&quot;);</code></pre><p>  result = 0LL;<br>}<br>//调用的子函数<br>signed <strong>int64 __fastcall sub_400686(</strong>int64 a1)<br>{<br>signed int i;<br>for ( i = 0; i &lt;= 31; ++i )<br>{<br>  if ( (char)(*(_BYTE *)(i + a1) ^ byte_400818[i]) != i )</p>
+<pre><code>return 0LL;</code></pre><p>}<br>return 1LL;<br>}`</p>
+<ul>
+<li>其中<img src="reverse1.jpg" alt=""></li>
+<li>可知子函数定义一个循环，当循环的每次判断均为true时，才满足条件</li>
+</ul>
+</li>
+<li><p>逆向编程</p>
+</li>
+<li><p>`#include&lt;stdio.h&gt;<br>int array[]={102,109,99,100,127,60,54,114,87,66,100,59,123,82,124,60,102,84,96,96,39,74,73,127,113,88,82,114,125,117,42,98,0};<br>int main(){<br>  int i;<br>  for(i=0;i&lt;32;i++){</p>
+<pre><code>printf(&quot;%c&quot;,a[i]^i);</code></pre><p>  }<br>  printf(“\n”);<br>  return 0;}`<br>得到结果flag{90u_Kn0w_r3vErs3__hiAHiah4}</p>
+<h2 id="junior-math"><a href="#junior-math" class="headerlink" title="junior math"></a>junior math</h2></li>
+</ul>
+<h2 id="bytecode"><a href="#bytecode" class="headerlink" title="bytecode"></a>bytecode</h2><h2 id="angryHacking"><a href="#angryHacking" class="headerlink" title="angryHacking"></a>angryHacking</h2>
+      
+    </div>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/11/pwn/">
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lixiaohui">
+      <meta itemprop="description" content="what she says means everything">
+    </span>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIXiaohui">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/11/pwn/" class="post-title-link" itemprop="url">pwn</a>
+        </h1>
 
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-11 17:59:40 / 修改时间：17:59:41" itemprop="dateCreated datePublished" datetime="2020-03-11T17:59:40+08:00">2020-03-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
       
     </div>
 
@@ -358,17 +405,9 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">分类</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>
