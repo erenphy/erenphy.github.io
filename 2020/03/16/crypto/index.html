@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Crypto RSA用到的工具 ｏｐｅｎｓｓｌ 平台 Ubuntu 16.04">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crypto RSA">
+<meta property="og:url" content="http://erenphy.github.io/2020/03/16/crypto/index.html">
+<meta property="og:site_name" content="LIXiaohui">
+<meta property="og:description" content="Crypto RSA用到的工具 ｏｐｅｎｓｓｌ 平台 Ubuntu 16.04">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/rsa.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/rsa2.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/p&q.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/openssl.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/wieneratc.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/succwiener.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/alice_n.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/bob_n.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/succab.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/eve_a.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/eve_b.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/eve_succ.png">
+<meta property="og:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/n3.png">
+<meta property="article:published_time" content="2020-03-16T12:15:11.282Z">
+<meta property="article:modified_time" content="2020-03-17T04:40:52.437Z">
+<meta property="article:author" content="lixiaohui">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://erenphy.github.io/2020/03/16/crypto/crypto/rsa.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://erenphy.github.io/2020/03/16/crypto/"/>
+
+
+
+
+
+  <title>Crypto RSA | LIXiaohui</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LIXiaohui</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">what she says means everything</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/2020/03/16/crypto/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lixiaohui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIXiaohui">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Crypto RSA</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-16T20:15:11+08:00">
+                2020-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Crypto-RSA"><a href="#Crypto-RSA" class="headerlink" title="Crypto RSA"></a>Crypto RSA</h1><h3 id="用到的工具"><a href="#用到的工具" class="headerlink" title="用到的工具"></a>用到的工具</h3><p> ｏｐｅｎｓｓｌ</p>
+<h3 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h3><p> Ubuntu 16.04</p>
+<a id="more"></a>
+<h2 id="What’s-RSA"><a href="#What’s-RSA" class="headerlink" title="What’s RSA"></a>What’s RSA</h2><h3 id="题目给定-flag-enc-privatekey-pem"><a href="#题目给定-flag-enc-privatekey-pem" class="headerlink" title="题目给定 flag.enc  + privatekey.pem"></a>题目给定 flag.enc  + privatekey.pem</h3><p>利用  openssl进行 私钥解密<br><img src="crypto/rsa.png" alt=""></p>
+<hr>
+<h2 id="rsa2"><a href="#rsa2" class="headerlink" title="rsa2"></a>rsa2</h2><h3 id="题目给定flag-enc-publickey-pem"><a href="#题目给定flag-enc-publickey-pem" class="headerlink" title="题目给定flag.enc + publickey.pem"></a>题目给定flag.enc + publickey.pem</h3><p>利用</p>
+<pre><code>ｏｐｅｎｓｓｌ　ｒｓａ　－ｐｕｂｉｎ　－ｉｎ　ｐｕｂｋｅｙ．ｐｅｍ　－ｔｅｘｔ　－ｍｏｄｕｌｕｓ</code></pre><p>提取公钥信息<br> <img src="crypto/rsa2.png" alt=""></p>
+<p>可知 Modulus 即为 n , 指数e=65537，公钥位数只有256位，对十六进制数进行进制转换，n可以用factor分解出p,q<br><img src="crypto/p&q.png" alt=""><br>利用脚本解密，m即为所求FLAG</p>
+<pre><code>#!/usr/bin/python 
+#coding:utf-8  
+#@Author:li
+import libnum  
+from Crypto.Util.number import long_to_bytes  
+n = 87924348264132406875276140514499937145050893665602592992418171647042491658461 
+p = 275127860351348928173285174381581152299 
+q = 319576316814478949870590164193048041239  
+e = 65537  
+phi = (p-1)*(q-1)  
+d = libnum.invmod(e,phi)  
+with open(&apos;./flag.encrypt&apos;) as f:    
+    c = f.read().encode(&apos;hex&apos;)     
+    c = int(c,16)  
+m = pow(c,d,n)  
+print long_to_bytes(m) </code></pre><hr>
+<h2 id="Wiener-tricky"><a href="#Wiener-tricky" class="headerlink" title="Wiener tricky"></a>Wiener tricky</h2><h3 id="题目给定flag-enc-publickey-pem-1"><a href="#题目给定flag-enc-publickey-pem-1" class="headerlink" title="题目给定flag.enc + publickey.pem"></a>题目给定flag.enc + publickey.pem</h3><p>同样openssl提取公钥信息<br><img src="crypto/openssl.png" alt=""><br>这里的公钥长度为1027位，n &amp; e都很大，不适合暴力破解，利用wiener_attack的脚本RSAwienerHacker.hack_RSA（）进行：  </p>
+<p>  尝试解出d   </p>
+<pre><code>import  RSAwienerHacker
+e = 355949428044394011416525580640727209012115496460578082591540362115366141425837528189633616844162877584613018030741854275756897461200378167436571547815767157785675778909581575938939615940299471388870845995538439614911452236868092605005352109203362643524505566443025399407973408444593940143560487529347856187923
+n = 949603686045205715277174628136022115711156979860824039383799385101249348289935491073325953355239683776503155414384435860534465117430864566291387794089216559280434116213181181405857171075971236007710276483079389558212315153404594351264107147803340895025164316798193753138427414374746336511224920322316865644907
+d =  RSAwienerHacker.hack_RSA(e,n)
+if d:
+    print(d)</code></pre><p><img src="crypto/wieneratc.png" alt=""></p>
+<p> 由上可知思路可行，代码稍作修改，生成私钥  </p>
+<pre><code>#!/usr/bin/python  
+#coding:utf-8  
+#@Author:li
+import math
+import sys
+import libnum  
+import  RSAwienerHacker
+from Crypto.Util.number import long_to_bytes  
+from Crypto.PublicKey import RSA
+k = RSA.generate(1280) #选择256的倍数且大于1027
+k.e = 355949428044394011416525580640727209012115496460578082591540362115366141425837528189633616844162877584613018030741854275756897461200378167436571547815767157785675778909581575938939615940299471388870845995538439614911452236868092605005352109203362643524505566443025399407973408444593940143560487529347856187923
+k.n = 949603686045205715277174628136022115711156979860824039383799385101249348289935491073325953355239683776503155414384435860534465117430864566291387794089216559280434116213181181405857171075971236007710276483079389558212315153404594351264107147803340895025164316798193753138427414374746336511224920322316865644907
+k.d = RSAwienerHacker.hack_RSA(k.e,k.n)
+private = open(&apos;privatekey.pem&apos;,&apos;w&apos;)
+private.write(k.exportKey())
+private.close()</code></pre><p>由此得到privatekey.pem,  再次利用openssl解密<br><img src="crypto/succwiener.png" alt=""></p>
+<h2 id="rsabeta"><a href="#rsabeta" class="headerlink" title="rsabeta"></a>rsabeta</h2><h3 id="nc-vps1-blue-whale-me-30003"><a href="#nc-vps1-blue-whale-me-30003" class="headerlink" title="nc vps1.blue-whale.me 30003"></a>nc vps1.blue-whale.me 30003</h3><p>题给信息整理可分别得Alice与bob的公钥.pem和加密.enc文件<br>分别提取相应信息，<br><img src="crypto/alice_n.png" alt=""></p>
+<p><img src="crypto/bob_n.png" alt=""><br>比较可知，A&amp;B的公钥长度均为2048（很大），e不同，但两者的n相同!!!</p>
+<blockquote>
+<p>共模攻击<br>也称同模攻击，英文原名是 Common Modulus Attack 。<br>同模攻击利用的大前提就是，RSA体系在生成密钥的过程中使用了相同的模数n。</p>
+</blockquote>
+<p>共模攻击的一个前提就是gcd(e1,e2)=1，即 e1&amp;e2互质。4294967297与65537满足这个基本条件。    </p>
+<pre><code>gcd(e1,e2)=1  
+等价于 x1 * e1 + x2 * e2 = 1 必有解==&gt;拓展的欧几里得算法，其中x1,x2一正一负</code></pre><p>运用脚本</p>
+<pre><code>#!/usr/bin/python  
+#coding:utf-8  
+#@Author:li
+from libnum import xgcd,invmod,n2s
+n = 25185249971827842743297966957057888734972377721246303989446041558458550597006485087763974699872434012841685600646763559025574197432963583855533423175470956207313871492887372612394780385112297816775076468709196595484628362234489604658925629949644530041040157357861182949213900750536462962289451501969695047131216236271995205767431528466347678779636081096553690894896228992650474823468608730168608206461929345275624055388046316729408295755955626611015158008869991393620760696559470556120467747479448051143126847991253729668342163081775962041517044077063955379501788701011184302224920612192017666714259239301712460945337
+e1 = 65537
+e2 = 4294967297
+c1 = 53182152478986476676235080638863567820523099417718779049979118725352801093672684008714014373167765813341469030876616669255184730660957576337879899308454193773518918675780340194883424390209896239442463887519942009006032824521455181596701487225242544510452526235116204030757108501962925485068996403125151199070487636952913432219776201291694885995149064218417639891640564530115293667706584588895364122920417474115755522638352141518701288690109428914342446055044151996151203344535689554400588099096934211049749526777628134474643030674584655211682923159658982309233206331254125308822345768014725756959582698504067649167
+c2 = 18078608834286397749371639698246700769481176431050869067690164844435956633091075063908472758800245148959414138958159511281492606520316672054360445381776402270462095938035988808485890326271448256038650095342917121957142971473774894994513234797595123652398397322676840983972073973791023382012544200657957503623423257051155224865549641026919805375958403949130308832041534929071466643983591000410759504290140910894806917665030103168548734860200346458461535902901096723139069520680819331801916100019744241053299061669831466402403773780858817083728071315258201301827974685089833977236789395388206638429523362795919109752632
+def mygcd(x,y):
+ if x == 0:
+   return (y,0,1)
+ else:
+   a, b, c = mygcd(y % x, x)
+   return (a, c - ( y // x) * b, b)
+
+s = mygcd(e1,e2)
+s1 = s[1]
+s2 = s[2]
+if s1&lt;0:
+ s1 = -s1
+ c1 = invmod(c1,n)
+elif s2&lt;0:
+ s2 = -s2
+ c2 = invmod(c2,n)
+m = (pow(c1, s1, n)*pow(c2, s2, n)) % n
+print n2s(m)</code></pre><p>结果如图<img src="crypto/succab.png" alt=""></p>
+<hr>
+<h2 id="rsagamma"><a href="#rsagamma" class="headerlink" title="rsagamma"></a>rsagamma</h2><h3 id="nc-vps1-blue-whale-me-30004"><a href="#nc-vps1-blue-whale-me-30004" class="headerlink" title="nc vps1.blue-whale.me 30004"></a>nc vps1.blue-whale.me 30004</h3><p>题给信息整理可分别得Alice和Bob的公钥.pem文件，以及一封不确定发送方的加密.enc文件<br>分别提取公钥信息<br><img src="crypto/eve_a.png" alt="">  </p>
+<p><img src="crypto/eve_b.png" alt=""><br>比较可知，A&amp;B的公钥长度均为2048，n不同而且位数很大，无法暴力破解，但两者的e相同!!!<br>尝试找n1,n2的关系 通过欧几里得算法gcd(n1,n2)，可提取n1,n2的公共素因子p<br>这样q1,q2，乃至phi1,phi2d1,d2均可表示出来。</p>
+<pre><code>import libnum  
+from Crypto.Util.number import long_to_bytes 
+n1 = 25739458875390643922177002147068673765249826396436871325722813593074609312979073039657896364487021016304341639987888268714243789077701600527318351071944590021555405972552992413179371535234879807797289650866738730702656337264934346613107683689962371223392296608215182497581973135194404290303545664048592304700451407578281964408951558819156741722289432599084376959149205195240939801488417231780041718755075847853445975450756253281910290254116145258085812638590523137333559524332845345230634824194526719003176389794327719155772116802965706240251200392118978279765701248759492693259323154208549694252819972334547100384363
+n2 = 25646634685525271639028550715079494588036546775440717602152486026491851836167392334664780735444774387931834328444424669371902112162364758138722108713951832845506698938360789788987231526927733329321908821614567898842193881124118098070945490670174480616143357780869447781516944560034572758773071225784387945436692004142487066581882070464104433826812603190874284265069167934506954131955598564312813551112416086557407777165987753128838752236283843975225561433754868300378756524935307727711224981649467064770028228567947860021850257132522491669650229256244699283610293983630317950614549402487968370709431502960568378199051
+e = 65537
+def gcd(a,b):
+  if a &lt; b:
+    a, b = b, a
+  while b != 0:
+    t = a % b
+    a = b
+    b = t
+  return a
+p = gcd(n1,n2)
+q1 = n1 / p
+phi1 = (q1 - 1) * (p - 1)
+d1 = libnum.invmod(e,phi1)
+
+q2 = n2 / p
+phi2 = (q2 - 1) * (p - 1)
+d2 = libnum.invmod(e,phi2) 
+c = 5583350751894137990410455323141805330891088011610455946599708875610627889972116241048996102369629165509059255494230166065086724896379163019470646136090803549282695324533665877517172383131133379860840477434885815846691780870201785604067789689011145771947228329126156947375040885737571119340575008318197384095461131574602953893967328713762261286016240122141190906088475354091105222002658846212179931836561233253426830559190559029635412416763146535628353753684553098563508896201695713489901619344719834268845714893002947744087859828107060416096624522140216955252814998049337828251429603838071528146968421820610671485962
+m = pow(c,d1,n1)  
+print long_to_bytes(m)</code></pre><p>因为不知道msg.enc的发送方是谁，在解密时需要分别用Alice和bob的私钥（d,n），直至出现flag。<br><img src="crypto/eve_succ.png" alt="">  </p>
+<hr>
+<h2 id="rsadelta"><a href="#rsadelta" class="headerlink" title="rsadelta"></a>rsadelta</h2><h3 id="nc-vps1-blue-whale-me-30005"><a href="#nc-vps1-blue-whale-me-30005" class="headerlink" title="nc vps1.blue-whale.me 30005"></a>nc vps1.blue-whale.me 30005</h3><p>题目给出三组n,c,没有其他条件</p>
+<blockquote>
+<p>中国剩余定理求解过程<br>假设有<br>y1 =  x^bmod n1<br>y2 =  x^bmod n2<br>y3 =  x^bmod n3<br>那么我们可以构造z1使<br>z1=n1n2 ((n1n2)^{-1}mod n3)<br>对于z1有<br>z1 = 0^bmod n1,<br> z1 = 0^bmod n2,<br>z1 = 1^bmod n3<br>所以我们按相同的方法构造z2, z3<br>最后得到z=z1y1+z2y2+z3y3<br>同时满足x的性质<br>所以容易得到x = z^bmod n1n2n3</p>
+</blockquote>
+<pre><code>#!/usr/bin/python  
+#coding:utf-8  
+#@Author:li
+from libnum import xgcd,invmod
+
+from gmpy2 import invert,iroot
+
+n1 = 24887822977823663392564279549211300412894997753578722576783526385319751782575065488673487671636527294641762664867658930675175569055887076864217517200262586381633941859549969435090776850490897784991212735764640985412861713490532098782143436928636537865325493334252984703553058537420661889874689250378372856112201349126282496730585728872349601066050512229991591238983699185489643319933593606294658023564384248776617612072152777846009649688319231393739968000812762477061782091740942573939495482246903767612414465189245562444169628580609132302966526399319146766970800017588413826712215090762361629954686375121895543557681
+n2 = 29287417087324419478539766406548688257601668484386543674194421977448654492618589919736393920212610758176092827979175748745892520260588093353642214276002478756536478149217481293229567280562881674825370951888008838606031467708966433106867601574218600375354241817917695415675622301595683292329201476480905086552547766223341802619321827902178563006133375707175149152213070978127754514156393081617586237048203671868337717154638157433609794489560873343235227580707044948495277549414472076073286263059593875569209341841261476017257532570696239603825576692147669127061761305996585901821803518300796236737530340249247516301681
+n3 = 24694047541953284589289475175304062041008315180118069834675056070822189940439708352597910655866117991933063837082323908337020119789686863102670876512824728661515893532011206952596353046407784476670184382068706637718332968537278501104435286311222186053413902439905685241894701860899675482401736769949814121095642234519910762798923801787645688657961505690234776041007198649851749599298460379084185149474539034230660925198364092514779353372706597067636038509902355912261264565063754801912966818008321270510103381832352367365047399366870466255894797516715982891516437453887635608667765472871308618349486181537803692129721
+c1 = 11497361833345786174764859932050522967153442840377987541333941312948224567176083163801502701161947313820769426104210238382129873710251605668759753181427474976170139272769183052784686828882629391747642214555914633083524753428419606753664803771941246379358308772030182270601989373039957672713466797161085068909873573307331837796900507762367759533035702218294949959832022887906160559936196665263982904747794045069796097723595522064484631939058750515503376074691900842099610358525034850418803168703838876648423295772906988981152048568560652661805550267957531191259497871203996648566655453361777825311550954132205675404031
+c2 = 19844442077989566732522474285972169320784254957236171641787907728240556657840983212806245743344710864603116401745294211875586632528190513998295674247348940719156815266788405161352585719830661991604173483408079584976558506431566778788919585360394021156267977342769099539602733987014764994353006360465763840576632735428842700473050434719847757574480298766190746561687828648794238426849415921918981405709530146096713045550167110416025059928438367071511103736422833723960641297419835138472193332911067861817765897335455201235602217481876322844045734128903629685659603683347517531592947814448288818751259491278102602580755
+c3 = 12005258796220500708527729858890430385011736555848782165978464739392841465168144625643697132452260156482681600300961956716851306691871412279016021159445713567393944057915208915353846240485512265363938353639875251200741852542939977707204866629687052062219172762710281652154321092818604913775891107809619355690914700138578084378523145692233481265671825716555224934698815233725210336154386718568592992563730605587000087659622390684109498111325314664159038429844176221951286532219347487680422810493039995324942493307932806880687584462084862471810838544611565770548890864662773050771787846448831420127415463053220088612703
+n = [n1,n2,n3]
+c = [c1,c2,c3]
+nn = 1
+for ni in n:
+ nn *= ni
+nni = []
+for ni in n:
+ nni.append(nn/ni)
+x = []
+for i in xrange(3):
+ x.append(long(invert(nni[i],n[i])))
+y = 0
+for i in xrange(3):
+ y += c[i]*nni[i]*x[i]
+m3 = y%nn
+m = iroot(m3,3)
+print m[0]</code></pre><p>将m的数值转为string,结果如图 <img src="crypto/n3.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/11/web/" rel="next" title="web">
+                <i class="fa fa-chevron-left"></i> web
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lixiaohui</p>
+              <p class="site-description motion-element" itemprop="description">what she says means everything</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Crypto-RSA"><span class="nav-number">1.</span> <span class="nav-text">Crypto RSA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用到的工具"><span class="nav-number">1.0.1.</span> <span class="nav-text">用到的工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平台"><span class="nav-number">1.0.2.</span> <span class="nav-text">平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What’s-RSA"><span class="nav-number">1.1.</span> <span class="nav-text">What’s RSA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目给定-flag-enc-privatekey-pem"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目给定 flag.enc  + privatekey.pem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsa2"><span class="nav-number">1.2.</span> <span class="nav-text">rsa2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目给定flag-enc-publickey-pem"><span class="nav-number">1.2.1.</span> <span class="nav-text">题目给定flag.enc + publickey.pem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wiener-tricky"><span class="nav-number">1.3.</span> <span class="nav-text">Wiener tricky</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目给定flag-enc-publickey-pem-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">题目给定flag.enc + publickey.pem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsabeta"><span class="nav-number">1.4.</span> <span class="nav-text">rsabeta</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nc-vps1-blue-whale-me-30003"><span class="nav-number">1.4.1.</span> <span class="nav-text">nc vps1.blue-whale.me 30003</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsagamma"><span class="nav-number">1.5.</span> <span class="nav-text">rsagamma</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nc-vps1-blue-whale-me-30004"><span class="nav-number">1.5.1.</span> <span class="nav-text">nc vps1.blue-whale.me 30004</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsadelta"><span class="nav-number">1.6.</span> <span class="nav-text">rsadelta</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nc-vps1-blue-whale-me-30005"><span class="nav-number">1.6.1.</span> <span class="nav-text">nc vps1.blue-whale.me 30005</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lixiaohui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
