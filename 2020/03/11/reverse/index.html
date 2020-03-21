@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://erenphy.github.io/2020/03/11/reverse/reverse1.jpg">
 <meta property="article:published_time" content="2020-03-11T10:00:36.259Z">
-<meta property="article:modified_time" content="2020-03-17T15:37:16.962Z">
+<meta property="article:modified_time" content="2020-03-21T07:57:13.622Z">
 <meta property="article:author" content="lixiaohui">
 <meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
@@ -341,7 +341,7 @@
 <pre><code>puts(&quot;Wrong!&quot;);</code></pre><p>  result = 0LL;<br>}<br>//调用的子函数<br>signed <strong>int64 __fastcall sub_400686(</strong>int64 a1)<br>{<br>signed int i;<br>for ( i = 0; i &lt;= 31; ++i )<br>{<br>  if ( (char)(*(_BYTE *)(i + a1) ^ byte_400818[i]) != i )</p>
 <pre><code>return 0LL;</code></pre><p>}<br>return 1LL;<br>}`</p>
 <ul>
-<li>其中<img src="reverse1.jpg" alt=""></li>
+<li>其中 <img src="reverse1.jpg" alt=""></li>
 <li>可知子函数定义一个循环，当循环的每次判断均为true时，才满足条件</li>
 </ul>
 </li>
@@ -349,8 +349,74 @@
 </li>
 <li><p>`#include&lt;stdio.h&gt;<br>int array[]={102,109,99,100,127,60,54,114,87,66,100,59,123,82,124,60,102,84,96,96,39,74,73,127,113,88,82,114,125,117,42,98,0};<br>int main(){<br>  int i;<br>  for(i=0;i&lt;32;i++){</p>
 <pre><code>printf(&quot;%c&quot;,a[i]^i);</code></pre><p>  }<br>  printf(“\n”);<br>  return 0;}`<br>得到结果flag{90u_Kn0w_r3vErs3__hiAHiah4}</p>
-<h2 id="junior-math"><a href="#junior-math" class="headerlink" title="junior math"></a>junior math</h2></li>
+<h2 id="junior-math"><a href="#junior-math" class="headerlink" title="junior math"></a>junior math</h2><p>更新时间 2020/3/21 11:01:02<br>在IDA中分析main逻辑  </p>
+<p>  printf(“Please input your flag:”, a2, a3);</p>
+<pre><code>__isoc99_scanf((__int64)&quot;%32s&quot;, (__int64)&amp;byte_602080);
+sub_4005D6();
+sub_40063F();
+sub_4006A8();
+sub_400711();
+sub_40077A();
+sub_4007E3();
+sub_40084C();
+sub_4008B5();
+sub_400918();
+sub_400981();
+sub_4009EA();
+sub_400A53();
+sub_400ABC();
+sub_400B25();
+if ( dword_602064 )
+  puts(&quot;Wrong!&quot;);
+else
+  puts(&quot;Right!&quot;);  </code></pre><p>可见，函数逻辑是进行一系列的sub_####之后，判断dword_602064的值，保证值为0，进入else分支即可。接下来分析sub_####函数 ，系列函数类似，以其中一个为例：可以分析汇编代码  </p>
+<blockquote>
+<p>回顾一下汇编语言 跳转指令<br>jmp 无条件跳转<br>jcxz 寄存器cx为zero则跳转；类似的jecsz<br>je 相等则跳转<br>jz 为0则跳转<br>js 为负则jump<br>jc 进位则jump<br>ja 无符号大于则跳转<br>jae无符号大于等于<br>jg 有符号大于<br>jb 无符号小于<br>jl 有符号小于     </p>
+</blockquote>
+</li>
 </ul>
+<p>也可以直接f5  </p>
+<pre><code>__int64 sub_4005D6()
+{
+  int v0; // edx@3
+  __int64 result; // rax@5
+
+  v0 = (byte_602080 - 147) * byte_602080 != -4590 || (byte_602082 - 147)*byte_602082 != -4850;
+  result = v0 | (unsigned int)dword_602064;
+  dword_602064 |= v0;
+  return result;
+}  </code></pre><p>函数逻辑为判断(array[i]-num1)<em>array[i] 是否等于num2 ||  (array[i+2]-num1)</em>array[i+2] 是否等于num3 将判断的结果赋值为v0<br>每次的sub 函数都会将dword_602064与v0进行或运算<br>这样要使得最后的dword_602064值为0，需要确保每次vo均为0，即<br>  <code>(byte_602080 - 147) * byte_602080 == -4590 &amp;&amp; (byte_602082 - 147)*byte_602082 == -4850</code><br>另外<br>涉及的byte_602080—60208f 都属于.bss段</p>
+<blockquote>
+<p>BSS段（bss segment）通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。BSS是英文Block Started by Symbol的简称。BSS段属于静态内存分配。  </p>
+</blockquote>
+<p>整理思路，共有14个sub函数，每个函数内部要求两个未知数（比如x1,x3）各自满足一个一元二次方程。这样整体x2–x13都各自需要满足两个一元二次方程，x2–x13都有唯一解 （x0,x1,x14,x15只需要满足一个一元二次方程）<br>脚本如下：</p>
+<pre><code>import math
+
+a = []
+b = [147,999,1414,214,1111,1010,741,114,911,2333,6666,917,1020,54321]
+c1 = [4590,96228,127749,11433,121524,66669,33264,333,57324,212610,714713,44980,104864,5638568]
+c2 = [4850,92288,158793,10153,51024,99789,45764,1805,87418,118612,759800,84552,68256,6774500]
+for i in range(0,14):
+     deta1 = int(b[i] * b[i] - 4 * c1[i])
+     t1 = int((-int(b[i]) + math.sqrt(deta1))/2)
+     t2 = int((-int(b[i]) - math.sqrt(deta1))/2)
+     if i&lt;2 :
+          print (i)
+          a.append(t1) #或t2
+          continue
+     deta2 = int(b[i-2] * b[i-2] - 4 * c2[i-2])
+     t3 = int((-int(b[i-2]) + math.sqrt(deta2))/2)
+     t4 = int((-int(b[i-2]) - math.sqrt(deta2))/2)
+     if t1 == t3 or t1 ==t4 :
+          a.append(t1)
+     else :
+          a.append(t2)
+for i in range(14,16):
+     deta2 = int(b[i-2] * b[i-2] - 4 * c2[i-2])
+     t3 = int((-int(b[i-2]) + math.sqrt(deta2))/2)
+     t4 = int((-int(b[i-2]) - math.sqrt(deta2))/2)
+     a.append(t3) #或t4
+print(a)</code></pre><p>a[]转字符串得到 flag</p>
 <h2 id="bytecode"><a href="#bytecode" class="headerlink" title="bytecode"></a>bytecode</h2><h2 id="angryHacking"><a href="#angryHacking" class="headerlink" title="angryHacking"></a>angryHacking</h2>
       
     </div>
@@ -475,7 +541,7 @@
               
                 <a href="/erenphy.github.io/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -486,7 +552,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 
               </div>
@@ -497,7 +563,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

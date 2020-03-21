@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="objdump，gdb," />
 
 
 
@@ -79,15 +79,20 @@
 
 
 
-<meta name="description" content="what she says means everything">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LIXiaohui">
-<meta property="og:url" content="http://erenphy.github.io/tags/config/index.html">
+<meta name="description" content="March 21, 2020 11:25 PM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bomb 拆弹1">
+<meta property="og:url" content="http://erenphy.github.io/2020/03/21/bomb_phase2/index.html">
 <meta property="og:site_name" content="LIXiaohui">
-<meta property="og:description" content="what she says means everything">
+<meta property="og:description" content="March 21, 2020 11:25 PM">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase2/bomb2.png">
+<meta property="article:published_time" content="2020-03-21T07:35:25.000Z">
+<meta property="article:modified_time" content="2020-03-21T07:47:12.783Z">
 <meta property="article:author" content="lixiaohui">
+<meta property="article:tag" content="objdump，gdb">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase2/bomb2.png">
 
 
 
@@ -117,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://erenphy.github.io/tags/config/"/>
+  <link rel="canonical" href="http://erenphy.github.io/2020/03/21/bomb_phase2/"/>
 
 
 
 
 
-  <title>Tag: config | LIXiaohui</title>
+  <title>bomb 拆弹1 | LIXiaohui</title>
   
 
 
@@ -142,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -246,54 +251,239 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>config<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase2/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lixiaohui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/erenphy.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIXiaohui">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/erenphy.github.io/2020/03/17/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="url">
-              
-                <span itemprop="name">环境配置</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">bomb 拆弹1</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-03-17T21:19:57+08:00"
-              content="2020-03-17" >
-          03-17
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-21T15:35:25+08:00">
+                2020-03-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/erenphy.github.io/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">二进制</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <p>March 21, 2020 11:25 PM</p>
+<a id="more"></a>
+<h3 id="phase-2汇编代码分析"><a href="#phase-2汇编代码分析" class="headerlink" title="phase_2汇编代码分析"></a>phase_2汇编代码分析</h3><p>有了phase_1的经验，接下来直接分析反汇编a.out文件中phase_2的指令<br>显然，phase_2要求输入6位数字</p>
+<pre><code>08048bb4 &lt;phase_2&gt;:
+ 8048bb4:    56                       push   %esi
+ 8048bb5:    53                       push   %ebx
+ #开辟一个3*16+4 =52大小的空间
+ 8048bb6:    83 ec 34                 sub    $0x34,%esp
+
+ #把esp的值 + 0x18 传给eax
+ 8048bb9:    8d 44 24 18              lea    0x18(%esp),%eax
+
+ 8048bbd:    89 44 24 04              mov    %eax,0x4(%esp)
+ 8048bc1:    8b 44 24 40              mov    0x40(%esp),%eax
+ 8048bc5:    89 04 24                 mov    %eax,(%esp)
+ 8048bc8:    e8 1f 06 00 00           call   80491ec &lt;read_six_numbers&gt;
+ #
+ 8048bcd:    83 7c 24 18 00           cmpl   $0x0,0x18(%esp)
+
+ #1.上条指令判断的结果应为 equal，否则jump to bomb,即a[1]=0
+ 8048bd2:    75 07                    jne    8048bdb &lt;phase_2+0x27&gt;
+ 8048bd4:    83 7c 24 1c 01           cmpl   $0x1,0x1c(%esp)
+
+ #2.上条指令判断结果应为equal，否则继续执行 call bomb,即a[2]=1
+ 8048bd9:    74 1f                    je     8048bfa &lt;phase_2+0x46&gt;
+ 8048bdb:    e8 e5 05 00 00           call   80491c5 &lt;explode_bomb&gt;
+ 8048be0:    eb 18                    jmp    8048bfa &lt;phase_2+0x46&gt;
+
+ #a[3]的地址减去8即：a[1]的值保存在EAX
+ 8048be2:    8b 43 f8                 mov    -0x8(%ebx),%eax
+
+ #eax = eax + a[2] = a[1]+a[2]
+ 8048be5:    03 43 fc                 add    -0x4(%ebx),%eax
+ 8048be8:    39 03                    cmp    %eax,(%ebx)
+
+ #3.上条指令判断结果应为equal，否则继续执行 call bomb,
+ 即 a[3] == a1+a2 =1
+ 8048bea:    74 05                    je     8048bf1 &lt;phase_2+0x3d&gt;
+ 8048bec:    e8 d4 05 00 00           call   80491c5 &lt;explode_bomb&gt;
+
+ #ebx = ebx + 4 =a3 + 4 = 5
+ 8048bf1:    83 c3 04                 add    $0x4,%ebx
+
+ #compare edx是不是指向6位数的next，即判断6位数是否结束
+ 8048bf4:    39 f3                    cmp    %esi,%ebx
+
+ #不相等时跳转，执行循环，分析跳出循环后函数结束。循环结束的条件是a7 == ebx
+ 8048bf6:    75 ea                    jne    8048be2 &lt;phase_2+0x2e&gt;
+ 8048bf8:    eb 0a                    jmp    8048c04 &lt;phase_2+0x50&gt;
+ #a[3]的地址保存到ebx
+ 8048bfa:    8d 5c 24 20              lea    0x20(%esp),%ebx
+ #a[3+4]的地址保存到esi;当然input不存在a7
+ 8048bfe:    8d 74 24 30              lea    0x30(%esp),%esi
+ 8048c02:    eb de                    jmp    8048be2 &lt;phase_2+0x2e&gt;
+ 8048c04:    83 c4 34                 add    $0x34,%esp
+ 8048c07:    5b                       pop    %ebx
+ 8048c08:    5e                       pop    %esi
+ 8048c09:    c3                       ret    </code></pre><p>其中的循环拿出来专門分析：得出e2 和 e5的两条mov,add指令实现：当前数字是前两位数字之和。<br>验证  </p>
+<p><img src="/erenphy.github.io/2020/03/21/bomb_phase2/bomb2.png" class="" title="img}&lt;&#x2F;p&gt; &lt;p&gt;补充：&lt;br&gt;lea指令 segreg:base_address(offset_address, index, size)&lt;&#x2F;p&gt;">
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/erenphy.github.io/tags/objdump%EF%BC%8Cgdb/" rel="tag"># objdump，gdb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/erenphy.github.io/2020/03/19/Misc/" rel="next" title="Misc">
+                <i class="fa fa-chevron-left"></i> Misc
+              </a>
+            
+          </div>
+
+ <div>
+    
+        <div>
+      
+          <div style="text-align:center;color: #ccc;font-size:14px;">-------------the end <i class="fa fa-paw"></i>thx for u reading-------------</div>
+      
+  </div>
+
+    
+  </div>         <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/erenphy.github.io/2020/03/21/bomb_phase1/" rel="prev" title="bomb 拆弹1">
+                bomb 拆弹1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -301,6 +491,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -321,8 +515,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -382,6 +585,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#phase-2汇编代码分析"><span class="nav-number">1.</span> <span class="nav-text">phase_2汇编代码分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -517,6 +736,10 @@
   
 
   
+  <script type="text/javascript" src="/erenphy.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/erenphy.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

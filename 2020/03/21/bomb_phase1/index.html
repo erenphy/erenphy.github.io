@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ctf," />
+  <meta name="keywords" content="ctf，objdump，gdb," />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="图片隐写术使用Stegsolve——Analyse——Frame Browser这个可以浏览三个颜色通道中的每一位，可以在红色通道的最低位，发现一个二维码，然后可以扫描得到结果。 docxdocx文件的本质是压缩文件，改文件后缀为zip，解压缩能看到xml文件   forensics1http流量分析，在正则条件里直接选http数据包看到一个GET  secret.png，打开所在package，">
+<meta name="description" content="March 21, 2020 5:52 PM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Misc">
-<meta property="og:url" content="http://erenphy.github.io/2020/03/19/Misc/index.html">
+<meta property="og:title" content="bomb 拆弹1">
+<meta property="og:url" content="http://erenphy.github.io/2020/03/21/bomb_phase1/index.html">
 <meta property="og:site_name" content="LIXiaohui">
-<meta property="og:description" content="图片隐写术使用Stegsolve——Analyse——Frame Browser这个可以浏览三个颜色通道中的每一位，可以在红色通道的最低位，发现一个二维码，然后可以扫描得到结果。 docxdocx文件的本质是压缩文件，改文件后缀为zip，解压缩能看到xml文件   forensics1http流量分析，在正则条件里直接选http数据包看到一个GET  secret.png，打开所在package，">
+<meta property="og:description" content="March 21, 2020 5:52 PM">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-18T17:43:35.000Z">
-<meta property="article:modified_time" content="2020-03-18T18:19:25.270Z">
+<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase1/bombchmod.png">
+<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase1/bombgdb.png">
+<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase1/bomb1.png">
+<meta property="article:published_time" content="2020-03-21T07:36:45.000Z">
+<meta property="article:modified_time" content="2020-03-21T07:46:34.227Z">
 <meta property="article:author" content="lixiaohui">
-<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="ctf，objdump，gdb">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase1/bombchmod.png">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://erenphy.github.io/2020/03/19/Misc/"/>
+  <link rel="canonical" href="http://erenphy.github.io/2020/03/21/bomb_phase1/"/>
 
 
 
 
 
-  <title>Misc | LIXiaohui</title>
+  <title>bomb 拆弹1 | LIXiaohui</title>
   
 
 
@@ -263,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/erenphy.github.io/2020/03/19/Misc/">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/erenphy.github.io/2020/03/21/bomb_phase1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lixiaohui">
@@ -280,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Misc</h1>
+          <h1 class="post-title" itemprop="name headline">bomb 拆弹1</h1>
         
 
         <div class="post-meta">
@@ -292,8 +296,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-19T01:43:35+08:00">
-                2020-03-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-21T15:36:45+08:00">
+                2020-03-21
               </time>
             
 
@@ -302,6 +306,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/erenphy.github.io/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">二进制</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -330,9 +356,88 @@
       
 
       
-        <h2 id="图片隐写术"><a href="#图片隐写术" class="headerlink" title="图片隐写术"></a>图片隐写术</h2><p>使用Stegsolve——Analyse——Frame Browser这个可以浏览三个颜色通道中的每一位，可以在红色通道的最低位，发现一个二维码，然后可以扫描得到结果。</p>
-<h2 id="docx"><a href="#docx" class="headerlink" title="docx"></a>docx</h2><p>docx文件的本质是压缩文件，改文件后缀为zip，解压缩能看到xml文件  </p>
-<h2 id="forensics1"><a href="#forensics1" class="headerlink" title="forensics1"></a>forensics1</h2><p>http流量分析，在正则条件里直接选http数据包<br>看到一个GET  secret.png，打开所在package，导出分节流，Yes  </p>
+        <p>March 21, 2020 5:52 PM<a id="more"></a></p>
+<ul>
+<li><input disabled="" type="checkbox"> <p>工具： objdump; gdb</p>
+</li>
+<li><p><code>objdump -d bomb &gt;a.out</code> 得到反汇编文件</p>
+</li>
+<li><input disabled="" type="checkbox"> <p>事前准备：</p>
+</li>
+<li><p>chmod 修改文件权限<br>发现对bomb只有读写，不能执行，首先修改权限</p>
+<img src="/erenphy.github.io/2020/03/21/bomb_phase1/bombchmod.png" class="" title="img">  </li>
+<li><p>安装linux系统上markdown编辑器haroopad<br><a href="http://pad.haroopress.com/" target="_blank" rel="noopener">haroopad官网地址</a><br>或终端命令安装<br><code>wget https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x</code></p>
+</li>
+</ul>
+<hr>
+<p><em>1. objdump 命令介绍及使用</em><br>objdump是用来查看目标文件或exe的目标文件的构成的gcc工具<br>命令：  </p>
+<pre><code>objdump -a file #显示file的info
+objdump --section=.text -s file.o #显示file中text段的内容
+objdump -S file.o
+objdump -d file.o #反汇编目标文件的特定机器代码
+objdump -d -l file.o #显示代码中文件名称和行号
+objdump -h file.o #显示段header的info; </code></pre><ul>
+<li><p>./bomb 运行结果</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xiaofei@xiaofei-ideapad-15ISK:~&#x2F;Desktop&#x2F;bomb5$ .&#x2F;bomb</span><br><span class="line">Welcome to my fiendish little bomb. You have 6 phases with</span><br><span class="line">which to blow yourself up. Have a nice day!</span><br></pre></td></tr></table></figure>
+<p>随便输入，bomb!根据print提示，我们转到bomb.c文件</p>
+</li>
+<li><p>bomb.c文件</p>
+<p>  在c文件中，出现“Welcome to my fiendish little bomb.”  </p>
+</li>
+</ul>
+<pre><code>input = read_line();     /* Get input    */
+phase_1(input);          /* Run the phase        */
+phase_defused();         /* Drat!  They figured it out!
+                  * Let me know how they did it. */
+printf(&quot;Phase 1 defused. How about the next one?\n&quot;);</code></pre><p>转到a.out中对phase1分析</p>
+<hr>
+<h4 id="phase-1分析"><a href="#phase-1分析" class="headerlink" title="phase_1分析"></a>phase_1分析</h4><pre><code>08048b90 &lt;phase_1&gt;:
+ 8048b90:    83 ec 1c                 sub    $0x1c,%esp
+ 8048b93:    c7 44 24 04 e4 a1 04     movl   $0x804a1e4,0x4(%esp)
+ 8048b9a:    08 
+ 8048b9b:    8b 44 24 20              mov    0x20(%esp),%eax
+ 8048b9f:    89 04 24                 mov    %eax,(%esp)
+ 8048ba2:    e8 13 05 00 00           call   80490ba &lt;strings_not_equal&gt;
+ 8048ba7:    85 c0                    test   %eax,%eax
+ 8048ba9:    74 05                    je     8048bb0 &lt;phase_1+0x20&gt;
+ 8048bab:    e8 15 06 00 00           call   80491c5 &lt;explode_bomb&gt;
+ 8048bb0:    83 c4 1c                 add    $0x1c,%esp
+ 8048bb3:    c3                       ret    </code></pre><p>分析过程，只需要input与$0x804a1e4的内容相同即可<br>gdb 查看该地址内容即可  </p>
+<img src="/erenphy.github.io/2020/03/21/bomb_phase1/bombgdb.png" class="" title="img">  
+
+<p>验证  </p>
+<img src="/erenphy.github.io/2020/03/21/bomb_phase1/bomb1.png" class="" title="img">  
+
+
+<hr>
+<p>*==++gdb程序调试工具  ++== * </p>
+<p>功能：自定义运行；设置断点；断点检查；动态改变执行环境<br>gdb 命令：  </p>
+<pre><code>l #列出源代码
+    l 行号
+    l func
+b 16 #在第16行设置breakpoint
+b func #在function（）入口处设置断点
+    delete  行号
+    disable 行号
+    clear 行号
+    delete breakpoints
+info b #查看breakpoint info
+    info function
+r #run
+n #next单步执行
+s #step单步执行，能进入函数内部
+c #continue
+p i #print i
+    p func(35)
+    p func(a)
+    watch expression #设置监视点，表达式的值一旦该改变，调试立即终止
+where/bt #查看函数堆栈
+up/down #改变堆栈显示的深度
+set arges #设置运行时的参数
+show arges
+until #运行程序跳出循环
+finish #运行程序跳出函数
+call func(para) #调用可见的函数，并传参</code></pre><p>March 21, 2020 10:22 PM</p>
 
       
     </div>
@@ -350,7 +455,7 @@
       
         <div class="post-tags">
           
-            <a href="/erenphy.github.io/tags/ctf/" rel="tag"># ctf</a>
+            <a href="/erenphy.github.io/tags/ctf%EF%BC%8Cobjdump%EF%BC%8Cgdb/" rel="tag"># ctf，objdump，gdb</a>
           
         </div>
       
@@ -363,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/erenphy.github.io/2020/03/18/web/" rel="next" title="web">
-                <i class="fa fa-chevron-left"></i> web
+              <a href="/erenphy.github.io/2020/03/21/bomb_phase2/" rel="next" title="bomb 拆弹1">
+                <i class="fa fa-chevron-left"></i> bomb 拆弹1
               </a>
             
           </div>
@@ -381,10 +486,6 @@
   </div>         <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/erenphy.github.io/2020/03/21/bomb_phase2/" rel="prev" title="bomb 拆弹1">
-                bomb 拆弹1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -516,7 +617,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片隐写术"><span class="nav-number">1.</span> <span class="nav-text">图片隐写术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docx"><span class="nav-number">2.</span> <span class="nav-text">docx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#forensics1"><span class="nav-number">3.</span> <span class="nav-text">forensics1</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#phase-1分析"><span class="nav-number">1.</span> <span class="nav-text">phase_1分析</span></a></li></ol></div>
             
 
           </div>
