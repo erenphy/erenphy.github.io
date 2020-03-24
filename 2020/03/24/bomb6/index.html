@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="gbd," />
+  <meta name="keywords" content="gdb," />
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="March 22, 2020 10:14 PM">
+<meta name="description" content="March 24, 2020 11:05 PM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bomb3">
-<meta property="og:url" content="http://erenphy.github.io/2020/03/22/bomb4/index.html">
+<meta property="og:title" content="bomb6">
+<meta property="og:url" content="http://erenphy.github.io/2020/03/24/bomb6/index.html">
 <meta property="og:site_name" content="LIXiaohui">
-<meta property="og:description" content="March 22, 2020 10:14 PM">
+<meta property="og:description" content="March 24, 2020 11:05 PM">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/22/bomb4/bomb4.png">
-<meta property="article:published_time" content="2020-03-22T07:33:23.000Z">
-<meta property="article:modified_time" content="2020-03-22T08:43:19.742Z">
+<meta property="og:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/24/bomb6/bombx.png">
+<meta property="article:published_time" content="2020-03-24T07:08:06.000Z">
+<meta property="article:modified_time" content="2020-03-24T07:20:54.987Z">
 <meta property="article:author" content="lixiaohui">
-<meta property="article:tag" content="gbd">
+<meta property="article:tag" content="gdb">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/22/bomb4/bomb4.png">
+<meta name="twitter:image" content="http://erenphy.github.io/erenphy.github.io/2020/03/24/bomb6/bombx.png">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://erenphy.github.io/2020/03/22/bomb4/"/>
+  <link rel="canonical" href="http://erenphy.github.io/2020/03/24/bomb6/"/>
 
 
 
 
 
-  <title>bomb3 | LIXiaohui</title>
+  <title>bomb6 | LIXiaohui</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/erenphy.github.io/2020/03/22/bomb4/">
+    <link itemprop="mainEntityOfPage" href="http://erenphy.github.io/erenphy.github.io/2020/03/24/bomb6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lixiaohui">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">bomb3</h1>
+          <h1 class="post-title" itemprop="name headline">bomb6</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-22T15:33:23+08:00">
-                2020-03-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-24T15:08:06+08:00">
+                2020-03-24
               </time>
             
 
@@ -354,129 +354,158 @@
       
 
       
-        <p>March 22, 2020 10:14 PM</p>
+        <p>March 24, 2020 11:05 PM</p>
 <a id="more"></a>
-<h3 id="分析phase-4汇编"><a href="#分析phase-4汇编" class="headerlink" title="分析phase_4汇编"></a>分析phase_4汇编</h3><pre><code>08048db9 &lt;phase_4&gt;:
- 8048db9:    83 ec 2c                 sub    $0x2c,%esp
- 8048dbc:    8d 44 24 1c              lea    0x1c(%esp),%eax
- 8048dc0:    89 44 24 0c              mov    %eax,0xc(%esp)
-
- 8048dc4:    8d 44 24 18              lea    0x18(%esp),%eax
- 8048dc8:    89 44 24 08              mov    %eax,0x8(%esp)
-
- 8048dcc:    c7 44 24 04 cf a3 04     movl   $0x804a3cf,0x4(%esp)</code></pre><ul>
-<li>(gdb) x/s 0x804a3cf<br>0x804a3cf:    “%d %d”<br>说明input的格式为 数字+数字    </li>
-</ul>
-<pre><code>8048dd3:    08 
-8048dd4:    8b 44 24 30              mov    0x30(%esp),%eax
-8048dd8:    89 04 24                 mov    %eax,(%esp)
-8048ddb:    e8 80 fa ff ff           call   8048860 &lt;__isoc99_sscanf@plt&gt;
-#两个输入
-8048de0:    83 f8 02                 cmp    $0x2,%eax
-8048de3:    75 07                    jne    8048dec &lt;phase_4+0x33&gt;
-
-# the first num &lt;= 14
-8048de5:    83 7c 24 18 0e           cmpl   $0xe,0x18(%esp)
-8048dea:    76 05                    jbe    8048df1 &lt;phase_4+0x38&gt;
-8048dec:    e8 d4 03 00 00           call   80491c5 &lt;explode_bomb&gt;
-
-# 地址esp + 8 存放的值设置为14，esp + 4 = 0 
-8048df1:    c7 44 24 08 0e 00 00     movl   $0xe,0x8(%esp)
-8048df8:    00 
-8048df9:    c7 44 24 04 00 00 00     movl   $0x0,0x4(%esp)
-8048e00:    00 
-8048e01:    8b 44 24 18              mov    0x18(%esp),%eax
-8048e05:    89 04 24                 mov    %eax,(%esp)
-
-#问题的关键在function4这个函数
-8048e08:    e8 4f ff ff ff           call   8048d5c &lt;func4&gt;
-
-#函数返回后，函数体继续：eax的值 == 0x12
-8048e0d:    83 f8 12                 cmp    $0x12,%eax
-8048e10:    75 07                    jne    8048e19 &lt;phase_4+0x60&gt;
-
-#the second num  == 0x12
-8048e12:    83 7c 24 1c 12           cmpl   $0x12,0x1c(%esp)
-8048e17:    74 05                    je     8048e1e &lt;phase_4+0x65&gt;
-8048e19:    e8 a7 03 00 00           call   80491c5 &lt;explode_bomb&gt;
-8048e1e:    83 c4 2c                 add    $0x2c,%esp
-8048e21:    c3                       ret    </code></pre><ul>
-<li>func4汇编分析</li>
-</ul>
-<pre><code>08048d5c &lt;func4&gt;:
- 8048d5c:    56                       push   %esi
- 8048d5d:    53                       push   %ebx
- 8048d5e:    83 ec 14                 sub    $0x14,%esp
- 8048d61:    8b 54 24 20              mov    0x20(%esp),%edx
- 8048d65:    8b 44 24 24              mov    0x24(%esp),%eax
- 8048d69:    8b 74 24 28              mov    0x28(%esp),%esi
-
- #ecx = esi = a3
- 8048d6d:    89 f1                    mov    %esi,%ecx
-
- #ecx = ecx - eax = a3 - a2
- 8048d6f:    29 c1                    sub    %eax,%ecx
-
- #ebx = ecx = a3 - a2
- 8048d71:    89 cb                    mov    %ecx,%ebx
-
- #ebx右移31位,即取标志位
- 8048d73:    c1 eb 1f                 shr    $0x1f,%ebx
-
- #ecx = ecx + ebx =（若a3&gt;a2则标志位为0，否则为1）= a3-a2 或a3-a2+1
- 8048d76:    01 d9                    add    %ebx,%ecx
-
- #ecx = ecx / 2 = (a3-a2)/2
- 8048d78:    d1 f9                    sar    %ecx
-
- #ebx = eax *1 + ecx = (a2 + a3) / 2
- 8048d7a:    8d 1c 01                 lea    (%ecx,%eax,1),%ebx
-
- #a1 与 (a2 + a3) / 2 比较，若a1&lt;=，则应为下述递归调用的出口
- 8048d7d:    39 d3                    cmp    %edx,%ebx
- 8048d7f:    7e 17                    jle    8048d98 &lt;func4+0x3c&gt;
-
- #if a1 &gt; (a2 + a3) / 2 ， then ecx = ebx -1 = (a2 + a3) / 2 - 1
- 8048d81:    8d 4b ff                 lea    -0x1(%ebx),%ecx
-     #a3 = (a2 + a3) / 2 - 1
-     8048d84:    89 4c 24 08              mov    %ecx,0x8(%esp)
-     #a2 = a2
-     8048d88:    89 44 24 04              mov    %eax,0x4(%esp)
-     #a1 = a1,作为参数，递归调用
-     8048d8c:    89 14 24                 mov    %edx,(%esp)
-     8048d8f:    e8 c8 ff ff ff           call   8048d5c &lt;func4&gt;
- #作为函数返回值，eax = eax + ebx 
- 8048d94:    01 d8                    add    %ebx,%eax
- 8048d96:    eb 1b                    jmp    8048db3 &lt;func4+0x57&gt;
-
- #eax = (a2 + a3) / 2
- 8048d98:    89 d8                    mov    %ebx,%eax
-
- #else if (a2 + a3) / 2 == a1 then return;
- 8048d9a:    39 d3                    cmp    %edx,%ebx
- 8048d9c:    7d 15                    jge    8048db3 &lt;func4+0x57&gt;
-
- #else if (a2 + a3) / 2 &gt; a1 then 
-     #a3 = a3
-     8048d9e:    89 74 24 08              mov    %esi,0x8(%esp)
-     #eax = ebx + 1 = (a2 + a3) / 2 + 1
-     8048da2:    8d 43 01                 lea    0x1(%ebx),%eax
-     #a2 = (a2 + a3) / 2 + 1
-     8048da5:    89 44 24 04              mov    %eax,0x4(%esp)
-     #a1 = a1 作为参数，递归调用
-     8048da9:    89 14 24                 mov    %edx,(%esp)
-     8048dac:    e8 ab ff ff ff           call   8048d5c &lt;func4&gt;
- #作为函数返回值，eax = eax + ebx 
- 8048db1:    01 d8                    add    %ebx,%eax
- 8048db3:    83 c4 14                 add    $0x14,%esp
- 8048db6:    5b                       pop    %ebx
- 8048db7:    5e                       pop    %esi
- 8048db8:    c3                       ret    </code></pre><p>根据func4的逻辑&amp;&amp;全局变量的返回值==0x12<br>过程稍显复杂，暴破算啦，好在the first num的范围不大</p>
-<p>验证 ：</p>
-<img src="/erenphy.github.io/2020/03/22/bomb4/bomb4.png" class="" title="img">  
 
 
-<p>补充<br>shl 逻辑左移命令，左移动一位相当于*2<br>shr 逻辑右移命令，右移动时添0<br>sar 算术右移命令，右移动时补充标志位</p>
+<h3 id="phase-6汇编代码分析"><a href="#phase-6汇编代码分析" class="headerlink" title="phase_6汇编代码分析"></a>phase_6汇编代码分析</h3><pre><code>08048e6b &lt;phase_6&gt;:
+ 8048e6b:    56                       push   %esi
+ 8048e6c:    53                       push   %ebx
+ 8048e6d:    83 ec 44                 sub    $0x44,%esp
+ 8048e70:    8d 44 24 10              lea    0x10(%esp),%eax
+ 8048e74:    89 44 24 04              mov    %eax,0x4(%esp)
+ 8048e78:    8b 44 24 50              mov    0x50(%esp),%eax
+ 8048e7c:    89 04 24                 mov    %eax,(%esp)
+ 8048e7f:    e8 68 03 00 00           call   80491ec &lt;read_six_numbers&gt;
+
+ # esi = 0
+ 8048e84:    be 00 00 00 00           mov    $0x0,%esi
+
+ #eax = esp + (4*esi +0x10)offset
+ 8048e89:    8b 44 b4 10              mov    0x10(%esp,%esi,4),%eax
+
+ #eax -- 
+ 8048e8d:    83 e8 01                 sub    $0x1,%eax
+ #eax &lt;=5
+ 8048e90:    83 f8 05                 cmp    $0x5,%eax
+ 8048e93:    76 05                    jbe    8048e9a &lt;phase_6+0x2f&gt;
+ 8048e95:    e8 2b 03 00 00           call   80491c5 &lt;explode_bomb&gt;
+
+ #esi ++
+ 8048e9a:    83 c6 01                 add    $0x1,%esi
+ -------------------------大循环开始---------------------------------
+ #while esi &lt; 6
+ 8048e9d:    83 fe 06                 cmp    $0x6,%esi
+ 8048ea0:    74 1b                    je     8048ebd &lt;phase_6+0x52&gt;
+
+     #ebx = esi(变量从0自加至5)
+     8048ea2:    89 f3                    mov    %esi,%ebx
+
+     ----------------------小循环-------------------------------
+     #eax = esp + (4*ebx +0x10)offset
+     8048ea4:    8b 44 9c 10              mov    0x10(%esp,%ebx,4),%eax
+     #0x10(%esp,%ebx,4) != 0xc(%esp,%esi,4)即各个数字不重复
+     8048ea8:    39 44 b4 0c              cmp    %eax,0xc(%esp,%esi,4)
+     8048eac:    75 05                    jne    8048eb3 &lt;phase_6+0x48&gt;
+     8048eae:    e8 12 03 00 00           call   80491c5 &lt;explode_bomb&gt;
+     #ebx ++
+     8048eb3:    83 c3 01                 add    $0x1,%ebx
+     #if ebx &lt;= 5
+     8048eb6:    83 fb 05                 cmp    $0x5,%ebx
+     8048eb9:    7e e9                    jle    8048ea4 &lt;phase_6+0x39&gt;
+    ------------------------小循环--------------------------
+
+    8048ebb:    eb cc                    jmp    8048e89 &lt;phase_6+0x1e&gt;
+ -------------------------大循环结束------------------------------------</code></pre><p>以上部分确保input各个数字无重复</p>
+<pre><code># eax = a1; ebx = a6
+8048ebd:    8d 44 24 10              lea    0x10(%esp),%eax
+8048ec1:    8d 5c 24 28              lea    0x28(%esp),%ebx
+
+ -------------------
+#edx = ecx = 7
+8048ec5:    b9 07 00 00 00           mov    $0x7,%ecx
+8048eca:    89 ca                    mov    %ecx,%edx
+#edx = edx - eax = 7-a1
+8048ecc:    2b 10                    sub    (%eax),%edx
+#eax = edx = 7-a1（值更新）
+8048ece:    89 10                    mov    %edx,(%eax)
+#eax指向下一个内存单元
+8048ed0:    83 c0 04                 add    $0x4,%eax
+#地址是否到0x28(%esp)，判断循环结束
+8048ed3:    39 d8                    cmp    %ebx,%eax
+8048ed5:    75 f3                    jne    8048eca &lt;phase_6+0x5f&gt;
+---------------------</code></pre><p>以上 an = 7 - an进行替换</p>
+<pre><code> -----------------------------------------ebx做循环变量
+ #ebx = 0
+ 8048ed7:    bb 00 00 00 00           mov    $0x0,%ebx
+ 8048edc:    eb 1d                    jmp    8048efb &lt;phase_6+0x90&gt;
+     #edx = edx + 8 = （$0x804c13c + 8）初始
+     8048ede:    8b 52 08                 mov    0x8(%edx),%edx
+     #eax++（eax初始为1）
+     8048ee1:    83 c0 01                 add    $0x1,%eax
+     #while ecx != eax
+     8048ee4:    39 c8                    cmp    %ecx,%eax
+     8048ee6:    75 f6                    jne    8048ede &lt;phase_6+0x73&gt;
+     #第一个数a1的值影响了循环的次数，从而影响了edx最终的结果
+
+ 8048ee8:    eb 05                    jmp    8048eef &lt;phase_6+0x84&gt;
+ 8048eea:    ba 3c c1 04 08           mov    $0x804c13c,%edx
+
+ #将edx的值传入0x28(%esp,%esi,4)一个新的地址{在大循环中表达式的esi为变量}
+ 8048eef:    89 54 b4 28              mov    %edx,0x28(%esp,%esi,4)
+ #ebx ++(初始为0) 循环出口
+ 8048ef3:    83 c3 01                 add    $0x1,%ebx
+ 8048ef6:    83 fb 06                 cmp    $0x6,%ebx
+ 8048ef9:    74 17                    je     8048f12 &lt;phase_6+0xa7&gt;
+ #esi = ebx
+ 8048efb:    89 de                    mov    %ebx,%esi
+ #ecx = 0x10(%esp,%ebx,4) 取第一个数的值{在大循环中，ecx逐次取a1--a6的值}
+ 8048efd:    8b 4c 9c 10              mov    0x10(%esp,%ebx,4),%ecx
+ 8048f01:    83 f9 01                 cmp    $0x1,%ecx
+ # if ecx &lt;= 1,then eea
+ 8048f04:    7e e4                    jle    8048eea &lt;phase_6+0x7f&gt;
+ # else if ecx&gt;1
+ # eax = 1; edx = $0x804c13c; jmp ede
+ 8048f06:    b8 01 00 00 00           mov    $0x1,%eax
+ 8048f0b:    ba 3c c1 04 08           mov    $0x804c13c,%edx
+ 8048f10:    eb cc                    jmp    8048ede &lt;phase_6+0x73&gt;
+---------------------------------------ebx做循环变量</code></pre><p>以上部分按照input对一段内存数据做处理，一一对应<br>GDB查看$0x804c13c及其相接的内存空间</p>
+<img src="/erenphy.github.io/2020/03/24/bomb6/bombx.png" class="" title="img">  
+
+
+
+<pre><code>8048f12:    8b 5c 24 28              mov    0x28(%esp),%ebx
+8048f16:    8d 44 24 2c              lea    0x2c(%esp),%eax
+8048f1a:    8d 74 24 40              lea    0x40(%esp),%esi
+#ecx = ebx (address)
+8048f1e:    89 d9                    mov    %ebx,%ecx
+    #edx = eax ||temp = a_next
+    8048f20:    8b 10                    mov    (%eax),%edx
+    #ecx+8 = esp + 0x28 + 8 = b3 = edx= b2 || a_next_next= temp
+    8048f22:    89 51 08                 mov    %edx,0x8(%ecx)
+    #eax = eax + 4 (address) || temp = a_next_next
+    8048f25:    83 c0 04                 add    $0x4,%eax
+    #循环出口
+    8048f28:    39 f0                    cmp    %esi,%eax
+    8048f2a:    74 04                    je     8048f30 &lt;phase_6+0xc5&gt;
+    #ecx = edx (address) || a = a_next
+    8048f2c:    89 d1                    mov    %edx,%ecx
+    8048f2e:    eb f0                    jmp    8048f20 &lt;phase_6+0xb5&gt;
+    ##链表操作
+# edx + 8 = 0
+8048f30:    c7 42 08 00 00 00 00     movl   $0x0,0x8(%edx)
+# esi = 5
+8048f37:    be 05 00 00 00           mov    $0x5,%esi
+    #eax = ebx+8
+    8048f3c:    8b 43 08                 mov    0x8(%ebx),%eax
+    #把eax的地址作为值存入eax中
+    8048f3f:    8b 00                    mov    (%eax),%eax
+    #比较a_next与a的值，即a&gt;=a_next否则bomb,说明降序
+    8048f41:    39 03                    cmp    %eax,(%ebx)
+    8048f43:    7d 05                    jge    8048f4a &lt;phase_6+0xdf&gt;
+    8048f45:    e8 7b 02 00 00           call   80491c5 &lt;explode_bomb&gt;
+    #取下一个地址，循环
+    8048f4a:    8b 5b 08                 mov    0x8(%ebx),%ebx
+    8048f4d:    83 ee 01                 sub    $0x1,%esi
+    #这里jne看的是ZF标志位，当esi!=1时，循环继续
+8048f50:    75 ea                    jne    8048f3c &lt;phase_6+0xd1&gt;
+8048f52:    83 c4 44                 add    $0x44,%esp
+8048f55:    5b                       pop    %ebx
+8048f56:    5e                       pop    %esi
+8048f57:    c3                       ret    </code></pre><p>整理数据<br> 0x0804c13c 0x00000125    0x00000001<br> 0x0804c148    0x0000014f  0x00000002<br> 0x0804c154    0x00000060    0x00000003<br> 0x0804c160    0x00000196    0x00000004<br> 0x0804c16c 0x0000028e    0x00000005<br> 0x0804c178    0x000002a9  0x00000006</p>
+<p>猜测内存中的结构体包括内存地址、大小和序号，将得到的数组按照大小降序整理，得到一个序列，（bn = 7 - an）不要忘记进行逆替换</p>
+<hr>
+<p>补充： GDB查看内存命令 x(examine)<br>    格式： x/[number][format][addr]<br>     number: 显示内存单元的个数<br>     format: d(int);s(string);c(char);x(hex);f(float)</p>
 
       
     </div>
@@ -494,7 +523,7 @@
       
         <div class="post-tags">
           
-            <a href="/erenphy.github.io/tags/gbd/" rel="tag"># gbd</a>
+            <a href="/erenphy.github.io/tags/gdb/" rel="tag"># gdb</a>
           
         </div>
       
@@ -507,8 +536,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/erenphy.github.io/2020/03/21/bomb_phase1/" rel="next" title="bomb 拆弹1">
-                <i class="fa fa-chevron-left"></i> bomb 拆弹1
+              <a href="/erenphy.github.io/2020/03/22/bomb4/" rel="next" title="bomb3">
+                <i class="fa fa-chevron-left"></i> bomb3
               </a>
             
           </div>
@@ -526,8 +555,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/erenphy.github.io/2020/03/24/bomb6/" rel="prev" title="bomb6">
-                bomb6 <i class="fa fa-chevron-right"></i>
+              <a href="/erenphy.github.io/2020/03/24/bomb5/" rel="prev" title="bomb5">
+                bomb5 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -660,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析phase-4汇编"><span class="nav-number">1.</span> <span class="nav-text">分析phase_4汇编</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#phase-6汇编代码分析"><span class="nav-number">1.</span> <span class="nav-text">phase_6汇编代码分析</span></a></li></ol></div>
             
 
           </div>
