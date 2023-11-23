@@ -28,6 +28,7 @@ tags:
 + 设置 host
 ###### 本地 ssh-keygen
 + `ssh-keygen`生成 "C:\Users\ouc\.ssh\id_rsa"和"C:\Users\ouc\.ssh\id_rsa.pub"
+> 这里有个坑，我一开始没理解明白，在远程服务器上执行了`ssh-keygen`一失足成千古恨，下午再git push的时候就push不上了，私钥变了，只能重新生成公私钥，配置github 
 + 一边将公钥上传到远程服务器 `scp -P portnum C:\Users\ouc\.ssh\id_rsa.pub your-remote-hostname@xx.xx.xx.xx:~/.ssh/`
 + 一边将私钥地址保存在.SSH/.config文件里 `IdentityFile C:\Users\ouc\.ssh\id_rsa`
 ###### 远程 认证
