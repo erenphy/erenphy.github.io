@@ -12,6 +12,8 @@ tags:
     - github
     - 图床
     - marp
+    - OUC主题PPT模板
+    - PPT模板
 ---
 
 > 三番四次回顾，每次换新的主机都要重新鼓捣一遍
@@ -40,6 +42,10 @@ marp: true
   + 多重背景图：`![bg]()`<br>`![bg]()`
   + 背景图拆分：`![bg left]()`或`![bg right]()`
   + 背景色：`![bg](颜色参数)`
+
+###### OUC主题marp
+  + 在[awesome MARP](https://github.com/favourhong/Awesome-Marp)的基础上，设计了包含中国海洋大学OUC元素的marp-[ppt模板](https://github.com/erenphy/oucmarptheme.git)   
+  
 ###### remotessh插件
 ###### 同步
 > 注册登录GitHub账号实现同步vscode挺好使的
