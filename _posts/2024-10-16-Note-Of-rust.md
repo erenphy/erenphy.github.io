@@ -68,6 +68,8 @@ tags:
 |python|慢；弱类型导致难以编写大型程序|
 |Java|依赖较长的运行时间|
 
+#### Awesome Rust
++ 
 
 
 
