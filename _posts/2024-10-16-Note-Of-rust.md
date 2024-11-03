@@ -9,6 +9,7 @@ catalog: true
 tags:
     - Rust
     - Note
+    - cpp
 ---
 > 来自 [black-hat-rust](https://github.com/skerkour/black-hat-rust) 
 
