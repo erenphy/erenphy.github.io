@@ -61,7 +61,7 @@ tags:
 ###### 分析者
 > 解释攻击结果、分析目标的具体优先级
 
-#### Rust编程语言
+#### Rust与其他语言的区别
 
 |编程语言|问题|
 |:--:|:--:|
@@ -70,8 +70,45 @@ tags:
 |Java|依赖较长的运行时间|
 
 #### Awesome Rust
-+ 
+##### Setup
+###### 安装rustup
+> 借助rustup管理工具链  
+> 可执行`rustup update`进行升级更新  
++ 安装方法
+  + windows [下载地址](https://www.rust-lang.org/zh-CN/tools/install) 
+  + 类unix安装命令
+`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`  
+    + 但是老报错👀，可能压缩包太大了，网络状况堪忧，推荐下一种方法  
+  
+  + [官方链接](https://forge.rust-lang.org/infra/other-installation-methods.html)找到适合自己操作系统的压缩包下载、解压，然后运行`sudo ./install.sh`进行安装  
+    + 安装包括编译器rustc\包管理器cargo\
 
++ 验证
+  + 安装完成后，运行`rustc --version`
+    + 这里的`rustc`是rust编辑器
+    + 我的显示`rustc 1.82.0 (f6e511eec 2024-10-15)`，安装成功啦🥂🥂🥂
 
+###### cargo安装各类工具
++ **换国内源**
+  + 在`/home/.cargo/config.toml`中添加  
+```toml
+[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+```
+
++ 添加环境变量
+  + `cargo install rustfmt`执行后，有一个warning：`warning: be sure to add `/home/lxh/.cargo/bin` to your PATH to be able to run the installed binaries`提示需要将bin加入环境变量
+    + 查看当前环境变量`echo $PATH`
+  + 方法1：`export PATH=/home/lxh/.cargo/bin:$PATH`
+    + 缺点：一次性修改
+  + 方法2：修改`~/.bashrc`文件，并终端执行`$ source ~/.bashrc`立即生效，且永久有效  
+  + 方法3：修改`/etc/profile`，同2
+
+###### 配置编辑器
++ 在vscode中装一个`rust-analyzer`插件，支持命令补全、代码检查
++  
 
 
