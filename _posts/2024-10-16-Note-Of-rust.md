@@ -3,8 +3,8 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [layout:     post
-title:      black-hat-rust
-subtitle:   阅读笔记
+title:      black-hat-rust-chapter01
+subtitle:   阅读笔记-第一章
 date:       2024-10-16
 author:     汤汤
 header-img: img/post-bg-ios9-web.jpg
@@ -12,7 +12,7 @@ catalog: true
 tags:
     - Rust
     - Note
-    - cpp](#layout-----post%0Atitle------black-hat-rust%0Asubtitle---%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%0Adate-------2024-10-16%0Aauthor-----%E6%B1%A4%E6%B1%A4%0Aheader-img-imgpost-bg-ios9-webjpg%0Acatalog-true%0Atags%0A------rust%0A------note%0A------cpp)
+    - cpp](#layout-----post%0Atitle------black-hat-rust-chapter01%0Asubtitle---%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0%0Adate-------2024-10-16%0Aauthor-----%E6%B1%A4%E6%B1%A4%0Aheader-img-imgpost-bg-ios9-webjpg%0Acatalog-true%0Atags%0A------rust%0A------note%0A------cpp)
 - [写在前面](#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2)
 - [chapter01](#chapter01)
     - [1. 攻击阶段](#1-%E6%94%BB%E5%87%BB%E9%98%B6%E6%AE%B5)
@@ -47,13 +47,15 @@ tags:
         - [所有权](#%E6%89%80%E6%9C%89%E6%9D%83)
         - [借用](#%E5%80%9F%E7%94%A8)
         - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+        - [引用计数智能指针](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88)
+        - [维护与更新](#%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%9B%B4%E6%96%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ---
 layout:     post
-title:      black-hat-rust
-subtitle:   阅读笔记
+title:      black-hat-rust-chapter01
+subtitle:   阅读笔记-第一章
 date:       2024-10-16
 author:     汤汤
 header-img: img/post-bg-ios9-web.jpg
@@ -165,7 +167,7 @@ registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
 
 #### 5. 小试牛刀
 ##### 5.1 代码框架
-1. `cargo new projectName1`使用包管理器创建一个新项目。创建成功后：  
+1. `cargo new projectName1`使用包管理器创建一个新项目。创建成功后项目目录如下所示：  
 
    ```
    projectName1
@@ -185,7 +187,7 @@ registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
 
    [dependencies]
    ```
-2. 在toml文件中加上某些依赖，就能在代码中使用相应函数
+2. 在`toml`文件中加上某些依赖，就能在代码中使用相应函数
 
 
 ##### 5.2 示例代码分析
@@ -258,6 +260,7 @@ error[E0308]: mismatched types
 ###### 5.2.2 Box与dyn
 
 ```rust
+// 截取部分示例代码
 fn main()-> Result<(), Box<dyn Error>>{
   ...
 }
@@ -276,14 +279,17 @@ fn main()-> Result<(), Box<dyn Error>>{
 ❓ <font color="#0e49a5">这里的trait和dyn是啥</font>
 
 ###### 5.2.3 <font color="#0047a5">Trait对象与dyn</font>
-+ `trait`类似于其它语言中的`interface`
-+ `dyn`是一个关键字，
-  + 使用`dyn`关键字，不在编译阶段静态确定，取而代之的是在运行阶段通过动态分发来调用`trait`方法
++ 是什么？
+  + `trait`类似于其它语言中的`interface`
+  + `dyn`是一个关键字，
+    + 使用`dyn`关键字，不在编译阶段静态确定，取而代之的是在运行阶段通过动态分发来调用`trait`方法
 + 静态分发与动态分发
   + 静态分发：在编译时确定方法调用的具体实现，使用泛型(❓<font color="#F14665">什么是泛型</font>)和`impl Trait`，不支持多态。
   + 动态分发：在运行时才确定，使用`dyn Trait`
   
 ```rust
+// 这里举一个使用dyn T的例子
+// 运行时根据“动物类型”动态决定“speak”方法
 let animals: Vec<Box<dyn Animal>> = vec![Box::new(Dog), Box::new(Cat)];
 for animal in animals {
     animal.speak();
@@ -295,12 +301,14 @@ for animal in animals {
   + 在定义函数、结构体、枚举、方法等时，使用占位符表示任意类型
   + 使用trait约束来限制泛型参数的类型范围
 ```rust
+// 泛型参数举例--结构体
 struct Point<T> {
     x: T,
     y: T,
 }
 let int_point = Point { x: 5, y: 10 };
 
+// 泛型参数举例--使用trait约束
 // T: std::fmt::Display 表示T必须实现Display接口
 fn print_value<T: std::fmt::Display>(value: T) {
     println!("{}", value);
@@ -308,6 +316,7 @@ fn print_value<T: std::fmt::Display>(value: T) {
 ```
 ###### 5.2.5 RAII(资源获取时初始化)
 ```rust
+// 截取部分示例代码
 let wordlist_file = File::open(&args[1])?;
 ```
 
@@ -334,6 +343,7 @@ let wordlist_file = File::open(&args[1])?;
 
 ###### 所有权
 
+
 ###### 借用
 
 ###### 生命周期
@@ -345,18 +355,19 @@ let wordlist_file = File::open(&args[1])?;
   + 用法：`'`+`标识符`，如`'a`，通常放在函数签名（🤷🏼<font color=green>什么是函数签名</font>）或结构体的定义中
 
 
+---
 
-
-+ <font color="#AA57FF">引用-Reference</font>
+1. <font color="#AA57FF">引用-Reference</font>
 > 指向另一个变量数据的指针，允许在不移动数据所有权的情况下访问或使用数据，从而实现共享和安全的数据访问
 > 核心是借用变量，而不改变变量的所有权
 
-+ 不可变引用`&`
++ 不可变引用`&`    
   + 只读访问数据，不能修改引用指向的数据
 + 可变引用`&mut`
-  + 允许修改数据
-  + 同一时间只能有一个可变引用，且不能与不可变引用同时存在
+    + 允许修改数据
+    + 同一时间只能有一个可变引用，且不能与不可变引用同时存在
 ```rust
+// 不可变引用和可变引用不能同时存在
 fn main() {
     let mut s = String::from("hello");
     let r1 = &s;       // 不可变引用
@@ -380,7 +391,7 @@ fn main() {
 + 另外，Rust也支持函数传参引用、多线程引用
 
 
-+ <font color=green>函数签名</font>
+2. <font color=green>函数签名</font>
   + 一般来说，包括：函数名、参数列表、返回类型
   + 作用：
     + 描述函数接口，方便被调用
@@ -389,11 +400,13 @@ fn main() {
     + 泛型参数
     + 生命周期注释
 
-+ <font color="#FF5733">类型安全</font>
+3. <font color="#FF5733">类型安全</font>
   + Rust是静态类型语言，在编译时会进行类型检查。同时支持类型推断，因此不需要显示标注每个变量的类型。
   + 但是，不允许隐式的类型转换，必须显式的进行。
 
-+ **引用计数智能指针**
+---
+
+###### 引用计数智能指针
 > 生命周期注释增加了代码复杂性、降低了可读性
 > 对一些共享（or not）、可变（or not）引用来说，使用生命周期注释相当麻烦
 > 一种解决方案是：引用计数智能指针`std::rc::Rc`(`reference counting`)
@@ -405,6 +418,8 @@ fn main() {
     let pointer = Rc::new(String::from("Hello, Rust!"));
     
     {
+        // 这里调用Rc.clone()只会增加引用计数，而不需要深拷贝
+        // 当引用计数为0时，才会清理数据
         let second_pointer = Rc::clone(&pointer); // 增加引用计数
         println!("{}", second_pointer); // 访问共享的 `String` 数据
     } // `second_pointer` 超出作用域，引用计数减少
@@ -412,4 +427,32 @@ fn main() {
     println!("{}", pointer); // 原始引用仍然有效
 }
 ```
+---
+❓<font color="#9900f7">**引用计数** 天然的 存在**循环引用**的问题</font>
 
+---
+
++ Rc--单线程场景下实现引用计数
+```rust
+use std::cell::{Refcell, RefMut};
+use std::rc::Rc;
+```
+
++ Arc--多线程场景下实现引用计数
+
+###### 维护与更新
++ rustup 本地工具链
+```shell
+rustup self update
+rustup update
+```
++ rust fmt 代码格式化工具`cargo fmt`
++ clippy 检测可能导致错误的代码
+```shell
+rustup component add clippy
+cargo clippy 
+```
++ cargo update
+```shell 
+cargo update
+```
