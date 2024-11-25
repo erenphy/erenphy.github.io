@@ -2,17 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [layout:     post
-title:      black-hat-rust-chapter01
-subtitle:   阅读笔记-第一章
-date:       2024-10-16
-author:     汤汤
-header-img: img/post-bg-ios9-web.jpg
-catalog: true
-tags:
-    - Rust
-    - Note
-    - cpp](#layout-----post%0Atitle------black-hat-rust-chapter01%0Asubtitle---%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0%0Adate-------2024-10-16%0Aauthor-----%E6%B1%A4%E6%B1%A4%0Aheader-img-imgpost-bg-ios9-webjpg%0Acatalog-true%0Atags%0A------rust%0A------note%0A------cpp)
+
 - [写在前面](#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2)
 - [chapter01](#chapter01)
     - [1. 攻击阶段](#1-%E6%94%BB%E5%87%BB%E9%98%B6%E6%AE%B5)
@@ -300,6 +290,7 @@ for animal in animals {
 + <font color="#F14665">泛型参数</font>
   + 在定义函数、结构体、枚举、方法等时，使用占位符表示任意类型
   + 使用trait约束来限制泛型参数的类型范围
+
 ```rust
 // 泛型参数举例--结构体
 struct Point<T> {
@@ -314,6 +305,7 @@ fn print_value<T: std::fmt::Display>(value: T) {
     println!("{}", value);
 }  
 ```
+
 ###### 5.2.5 RAII(资源获取时初始化)
 ```rust
 // 截取部分示例代码
@@ -329,9 +321,9 @@ let wordlist_file = File::open(&args[1])?;
   + 这里的文件句柄`wordlist_file`的作用域为`main`函数，当`main`函数返回时，文件会自动关闭
 
 ###### 5.2.6 Ok(())
-+ statements-oriented language 声明式语言  
++ `statements-oriented language` 声明式语言  
   + `return Ok(());`以“;”结尾   
-+ expression-oriented language 表达式语言  
++ `expression-oriented language` 表达式语言  
   + `Ok(())`没有标点符号  
 
 #### 6. For:初学者
@@ -347,7 +339,7 @@ let wordlist_file = File::open(&args[1])?;
 ###### 借用
 
 ###### 生命周期
-> lifetime
+> lifetime  
 > 编译器需要知道**引用的数据**在内存中存活的时间，以保证**引用**(🤷🏻<font color="#AA57FF">什么是引用</font>)在有效范围内是安全的  
 > 如果编译器无法推断出引用的生命周期，则要求程序员显式提供生命周期注释  
 
@@ -365,7 +357,8 @@ let wordlist_file = File::open(&args[1])?;
   + 只读访问数据，不能修改引用指向的数据
 + 可变引用`&mut`
     + 允许修改数据
-    + 同一时间只能有一个可变引用，且不能与不可变引用同时存在
+    + 同一时间只能有一个可变引用，且不能与不可变引用同时存在  
+  
 ```rust
 // 不可变引用和可变引用不能同时存在
 fn main() {
@@ -391,7 +384,7 @@ fn main() {
 + 另外，Rust也支持函数传参引用、多线程引用
 
 
-2. <font color=green>函数签名</font>
+1. <font color=green>函数签名</font>
   + 一般来说，包括：函数名、参数列表、返回类型
   + 作用：
     + 描述函数接口，方便被调用
@@ -400,7 +393,7 @@ fn main() {
     + 泛型参数
     + 生命周期注释
 
-3. <font color="#FF5733">类型安全</font>
+2. <font color="#FF5733">类型安全</font>
   + Rust是静态类型语言，在编译时会进行类型检查。同时支持类型推断，因此不需要显示标注每个变量的类型。
   + 但是，不允许隐式的类型转换，必须显式的进行。
 
@@ -427,6 +420,7 @@ fn main() {
     println!("{}", pointer); // 原始引用仍然有效
 }
 ```
+
 ---
 ❓<font color="#9900f7">**引用计数** 天然的 存在**循环引用**的问题</font>
 
@@ -442,12 +436,14 @@ use std::rc::Rc;
 
 ###### 维护与更新
 + rustup 本地工具链
+
 ```shell
 rustup self update
 rustup update
 ```
 + rust fmt 代码格式化工具`cargo fmt`
 + clippy 检测可能导致错误的代码
+  
 ```shell
 rustup component add clippy
 cargo clippy 
