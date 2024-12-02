@@ -1,5 +1,16 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+---
+layout:     post
+title:      black-hat-rust-chapter01
+subtitle:   阅读笔记-第一章
+date:       2024-10-16
+author:     汤汤
+header-img: img/post-bg-ios9-web.jpg
+catalog: true
+tags:
+    - Rust
+    - Note
+    - cpp
+
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 
@@ -42,18 +53,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
----
-layout:     post
-title:      black-hat-rust-chapter01
-subtitle:   阅读笔记-第一章
-date:       2024-10-16
-author:     汤汤
-header-img: img/post-bg-ios9-web.jpg
-catalog: true
-tags:
-    - Rust
-    - Note
-    - cpp
+
 ---
 > 来自 [black-hat-rust](https://github.com/skerkour/black-hat-rust) 
 
@@ -134,7 +134,8 @@ tags:
 
 ###### cargo安装各类工具
 + **换国内源**
-  + 在`/home/.cargo/config.toml`中添加  
+  + 在`/home/.cargo/config.toml`中添加
+  
 ```toml
 [source.crates-io]
 replace-with = 'ustc'
