@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Rust之option、result关键字
+title:      Rust之option、result枚举类型
 subtitle:   Option与Result枚举
 date:       2024-12-01
 author:     汤汤
@@ -26,7 +26,7 @@ tags:
   + `Ok()`表示正确返回
   + `Err()`表示返回错误
 
-# Option关键字
+# Option枚举
 > std::option
 > 表示一个可选值
 
@@ -92,7 +92,7 @@ if let Some(num) = val0{
 5. 可选的函数参数
 6. 可空指针
 
-# Result关键字  
+# Result枚举  
 > std::result::Result
 > Result很常用，直接被包含到`prelude`中
 > 因此不需要手动引入这个包
