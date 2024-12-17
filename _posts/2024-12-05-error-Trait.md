@@ -133,8 +133,9 @@ impl fmt::Display for MyError {
 ```
 ##### 3. 实现std::fmt::Debug
 + 借助`#[derive(Debug)]`可自动化实现
+
 ##### 4. 实现std::error::Error
-> ✅`std::error::Error`是一个接口，表示通用的错误类型。
+> ✅`std::error::Error`是一个接口，表示通用的错误类型。  
 > ✅`impl std::error::Error for MyError`为自己的`MyError`类型实现标准库`std::error::Error`接口，进一步就可以用来表示自定义的错误类型啦
 
 ```rust
