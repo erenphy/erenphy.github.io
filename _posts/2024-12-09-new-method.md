@@ -20,20 +20,20 @@ tags:
 
 |   |--  |名称|导航|
 |:-:|:-----:|:--------------:|:---:|
-|🗹 |枚举    |Option|Rust之option、result枚举类型|
-|🗹 |枚举    |Result|Rust之option、result枚举类型|
-|🗹 |枚举变体|Some  |Rust之option、result枚举类型|
-|🗹 |枚举变体|Ok    |Rust之option、result枚举类型|
-|🗹 |枚举变体|Err   |Rust之option、result枚举类型|
-|🗹 |关键字  |match |Rust之match、let、lf-let关键字|
-|🗹 |关键字  |let   |Rust之match、let、lf-let关键字|
-|🗹 |关键字  |if let|Rust之match、let、lf-let关键字|
-|🗹 |接口    |Error |Rust之Error接口（trait）|
-|🗹 |接口    |From  |Rust之From接口（trait） |
-|🗹 |接口    |Into  |Rust之From、Into接口（trait）|
-|🗹 |接口的定义|trait|Rust之Error接口（trait）|
+|√  |枚举    |Option|Rust之option、result枚举类型|
+|√  |枚举    |Result|Rust之option、result枚举类型|
+|√  |枚举变体|Some  |Rust之option、result枚举类型|
+|√  |枚举变体|Ok    |Rust之option、result枚举类型|
+|√  |枚举变体|Err   |Rust之option、result枚举类型|
+|√  |关键字  |match |Rust之match、let、lf-let关键字|
+|√  |关键字  |let   |Rust之match、let、lf-let关键字|
+|√  |关键字  |if let|Rust之match、let、lf-let关键字|
+|√  |接口    |Error |Rust之Error接口（trait）|
+|√  |接口    |From  |Rust之From接口（trait） |
+|√  |接口    |Into  |Rust之From、Into接口（trait）|
+|√  |接口的定义|trait|Rust之Error接口（trait）|
 |☐ |结构体  |fmt::Formatter|Rust之Error接口（trait）|
-|🗹 |泛型函数 |<T>  |Rust之泛型函数|
+|√ |泛型函数 |<T>  |Rust之泛型函数|
 |☐ |关联函数|new()  |Rust之关联函数、构造函数、方法与接口|
 |☐ |关联函数|default|Rust之关联函数、构造函数、方法与接口|
 |☐ |关联函数|from   |Rust之关联函数、构造函数、方法与接口|
