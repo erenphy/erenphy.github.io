@@ -50,12 +50,30 @@ tags:
 > 作用于结构体、枚举或者函数等特定代码
 > 可以修改、（主要是）扩展代码块的行为；如`#[derive(DEBUG)]`支持自动生成调试接口（debug trait）
 ### 用法：#[...]
-### 常见的标准库中的属性宏
+### 常见的属性宏
 + `#[derive]`自动生成特定的接口实现
     + 如`#[derive(debug)]` `#[derive(clone)]`
 + ️`#[test]`标记一个函数为单元测试
 + `#[cfg]`条件编译宏（<font color="#0F5733">暂时还没接触过，待补充</font>）
     + `#[cfg(target_os = "windows")]`看这个例子挺好理解的
++ `#[Error]` 由thiserror库提供，可以自动为错误类型实现`std::fmt::Debug` `std::fmt::Display` `std::error::Error`这些接口。在enum内部可以直接使用`#[error(...)]`定义错误格式。 
+
+```rust
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum MyError {
+    #[error("An error occurred with code {0}")]
+    CodeError(i32),
+
+    #[error("Invalid input: {0}")]
+    InvalidInput(String),
+}
+```
+
++ `#[derive(Clone)]` 自动为类型生成`clone`方法。
+  + 会得到一个新的实例，内容完全相同。
+  + 前提是，类型中的所有字段都实现了clone。
 
 ### 我可以自定义属性宏吗
 可以，可以借助`proc_macro`自定义。<font color="#0F00aa">太抽象了，暂时没看懂具体操作</font>
@@ -155,3 +173,7 @@ fn test_func() -> Result<(), MyError>{
     Err(MyError::new("i don't know but something going wrong"))
 }
 ```
+
+### anyhow::Error
++ `anyhow`提供了一个*类型别名*`Result<T>`表示`Result<T, anyhow::Error>`。
+    + 使用这个别名，需要先`use anyhow::{Result, Context};`

@@ -26,7 +26,7 @@ tags:
 |√  |关键字  |if let|Rust之match、let、lf-let关键字|
 |√  |接口    |Error |Rust之Error接口（trait）|
 |√  |接口    |From  |Rust之From接口（trait） |
-||接口    |Into  |Rust之From、Into接口（trait）|
+|√  |接口    |Into  |Rust之From、Into接口（trait）|
 |√  |接口的定义|trait|Rust之Error接口（trait）|
 |√  |结构体  |fmt::Formatter|Rust之Error接口（trait）|
 |☐ |泛型函数 |<T>  |Rust之泛型函数|
