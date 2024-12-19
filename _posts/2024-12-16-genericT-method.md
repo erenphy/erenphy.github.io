@@ -117,6 +117,8 @@ impl Shape for Circle {
 }
 
 // 泛型函数，接受任何实现了 Shape trait 的类型
+// 这里的<T: Shape>是接口限制trait bounds。
+// 它的作用是限制泛型T必须实现了Shape接口（impl Shape for some_T）
 fn calculate_area<T: Shape>(shape: &T) -> f64 {
     shape.area()
 }
@@ -143,6 +145,9 @@ fn main() {
 | 代码生成 |为每种类型实例化模板，单态化生成代码 |同样通过单态化优化性能|
 | 接口定义的灵活性| 更灵活，但易导致模板膨胀或模糊错误| 明确接口，限制更严格但更安全|
 
+> `trait bounds`   
+> 确保泛型T实现了某个接口（impl any_Trait for some_T）  
+> `<T: Shape + Display>` 支持使用`+`运算符执行多个bounds  
 
 #### 动态多态（将泛型换成&dyn trait或Box<dyn Trait>）
 + 在运行时才确定类型
