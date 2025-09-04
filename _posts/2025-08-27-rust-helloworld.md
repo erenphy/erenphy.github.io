@@ -127,6 +127,7 @@ edition = "2021"
 
 [dependencies]
 ```
+
 + `.toml`配置文件
   + 类似于`Node.js`的`package.json`
   + `[package]`：项目名、版本、作者等元信息。
@@ -290,7 +291,7 @@ sha1/src$ cargo build
   Downloaded block-buffer v0.10.4 (registry `ustc`)
 ```
 
-## sha1哈希算法
+## 1. Sha1哈希算法
 + SHA-1 结构与输出
   + 不可逆、单向的加密摘要函数—原则上不能“反向”还原输入
   + 输出长度为160位（20字节），常用`hex` 表示为 `40` 位十六进制字符串
@@ -298,11 +299,11 @@ sha1/src$ cargo build
   + 已知 SHA-1 存在碰撞攻击风险，被认为在安全上“已废弃”
 + 破解方法
   + **暴力猜测+ 哈希比较**
-    + 对 wordlist 中每个候选做 SHA-1，然后比对。
-    + 若wordlist不够，尝试所有可能的字符组合
-  + Rainbow table 查表
-  + Key stretching（提升计算成本
-## Rust增量开发
+    + 对 `wordlist` 中每个候选做 SHA-1，然后比对。
+    + 若`wordlist`不够，尝试所有可能的字符组合
+  + `Rainbow table` 查表
+  + `Key stretching`提升计算成本
+## 2. Rust增量开发
 >步骤提示：参数解析、字典加载（wordlist）、计算与对比、输出结果
 ### 程序入口与错误处理
 + 程序入口 `fn main()`
@@ -328,9 +329,120 @@ use std::env;
 + `.trim()`去除换行和空白
 ### 集合与迭代器
 ### 控制流
-#### 分支结构if
-#### 循环结构for
+[分支结构/循环结构](https://doc.rust-lang.org/book/ch03-05-control-flow.html)
 #### return
 #### Ok(())
 
+## 3. 组合子——集合与迭代器
+### 集合
+> Rust中常见的集合有哪些  
++ `a[]`数组
++ `vec![]`动态数组
++ `HashMap.new()`映射
+### 迭代器Iterator
+> An Iterator is an object that enables developers to traverse collections.
 
+#### Owned vs Borrowed Iterator
+```rust
+fn vector() {
+let v = vec![
+    1, 2, 3,];
+// .into_iter(): 所有权
+for x in v.into_iter() {  
+  println!("{}", x);
+}
+// you can't longer use v
+
+fn hashmap() {
+  let mut h = HashMap::new();
+  h.insert(String::from("Hello"), String::from("World"));
+  // .iter(): 借用
+  for (key, value) in h.iter() {
+    println!("{}: {}", key, value);
+  }
+}
+}
+```
+#### 迭代器使用
+
++ `for .. in ..`循环
++ `for_each()`函数
++ `.collect()`将迭代器转换为集合
+
+#### 举个栗子1：Collection
+```rust
+fn main() {
+    let nums = 1..=10; // 迭代器: 1 到 10
+
+    let total: i32 = nums.clone().sum();
+    println!("sum() => {}", total); // 55
+
+    let first_over_5 = nums.clone().find(|&x| x > 5);
+    println!("find() => {:?}", first_over_5); // Some(6)
+
+    let evens: Vec<_> = nums.clone().filter(|x| x % 2 == 0).collect();
+    println!("collect() => {:?}", evens); // [2, 4, 6, 8, 10]
+}
+
+```
+#### 举个栗子2：组合子
+
+```rust
+fn main() {
+    let nums = 1..=10;
+
+    let total: i32 = nums
+        .filter(|x| x % 2 == 0)
+        .filter(|x| *x > 5)
+        .sum();
+
+    println!("结果: {}", total); // 结果: 24  (6 + 8 + 10)
+}
+```
+
+### 组合子Combinator
++ `.filter()`
++ `.inspect`
+```rust
+fn inspect() {
+let v = vec![-1, 2, -3, 4, 5].into_iter();
+let _positive_numbers: Vec<i32> = v
+      //检查迭代的每个值
+      .inspect(|x| println!("Before filter: {}", x))
+      .filter(|x: &i32| x.is_positive())
+      .inspect(|x| println!("After filter: {}", x))
+      .collect();
+}
+```
+
+```rust
+src$ cargo run 
+   Compiling myhello v0.1.0 (/home/rust/myhello)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.67s
+     Running `/home/rust/myhello/target/debug/myhello`
+Before filter: -1
+Before filter: 2
+After filter: 2
+Before filter: -3
+Before filter: 4
+After filter: 4
+Before filter: 5
+After filter: 5
+```
++ `.map()`将元素进行类型转换  
++ `.filter_map()`：相当于`.filter`和`.map`的组合，可用于处理`Option`类型数据  
++ `.chain()`：合并两个`iterators` 
+
+```rust
+fn main() {
+let a = vec!["1","2","-1","4","-4","100","invalid","Not a number"," ",];
+let _only_positive_numbers: Vec<i64> = a
+.into_iter()
+//.inspect(|x| println!("before filter_map: {}", x))
+.filter_map(|x| x.parse::<i64>().ok())
+//.inspect(|x| println!("After filter_map: {}", x))
+.filter(|x| x > &0)
+//.inspect(|x| println!("After filter: {}", x))
+.collect();
+}
+```
